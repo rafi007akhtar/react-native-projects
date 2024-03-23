@@ -1,4 +1,4 @@
-import { Button, Text, TextInput, View } from "react-native";
+import { Button, Text, TextInput, View, ScrollView } from "react-native";
 import styles from "./App.styles";
 import { useState } from "react";
 import { useAtom } from "jotai";
@@ -28,13 +28,17 @@ export default function App() {
       </View>
 
       <View style={styles.goalsContainer}>
-        <Text>List of goals:</Text>
+        {/* ScrollView needs bounded height.
+        So wrap it inside a View ideally with some flex property to it. */}
+        <ScrollView persistentScrollbar={true}>
+          <Text>List of goals:</Text>
 
-        {allGoals.map((goal, ind) => (
-          <View key={ind} style={styles.goalItemView}>
-            <Text style={styles.goalItemText}>{goal}</Text>
-          </View>
-        ))}
+          {allGoals.map((goal, ind) => (
+            <View key={ind} style={styles.goalItemView}>
+              <Text style={styles.goalItemText}>{goal}</Text>
+            </View>
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
