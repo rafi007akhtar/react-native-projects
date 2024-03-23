@@ -3,10 +3,11 @@ import styles from "./App.styles";
 import { useState } from "react";
 import { useAtom } from "jotai";
 import { goals } from "./global-states";
+import GoalsScroll from "./components/GoalsScroll";
 
 export default function App() {
   const [enteredGoal, setEnteredGoal] = useState("");
-  const [allGoals, setAllGoals] = useAtom(goals);
+  const [_allGoals, setAllGoals] = useAtom(goals);
 
   function goalInputHandler(enteredText: string) {
     setEnteredGoal(enteredText);
@@ -30,15 +31,7 @@ export default function App() {
       <View style={styles.goalsContainer}>
         {/* ScrollView needs bounded height.
         So wrap it inside a View ideally with some flex property to it. */}
-        <ScrollView persistentScrollbar={true}>
-          <Text>List of goals:</Text>
-
-          {allGoals.map((goal, ind) => (
-            <View key={ind} style={styles.goalItemView}>
-              <Text style={styles.goalItemText}>{goal}</Text>
-            </View>
-          ))}
-        </ScrollView>
+        <GoalsScroll />
       </View>
     </View>
   );
