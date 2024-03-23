@@ -11,7 +11,6 @@ const goalStyles = StyleSheet.create({
   goalItemView: {
     // <Text> elems do NOT support borderRadius on iOS, so that, along with the rest, will be applied to a container <View> for the sake of iPhones
     margin: 8,
-    padding: 8,
     borderRadius: 6,
     backgroundColor: "#5e0acc",
   },
@@ -22,6 +21,12 @@ const goalStyles = StyleSheet.create({
     // here <Text> is a child element of <View>, but putting the color attribute to <View> style will not apply it to <Text>
     // therefore, to see the white color, it needs to be applied in the child <Text> elem
     color: "#ffffff",
+
+    padding: 8,
+  },
+
+  pressedItem: {
+    opacity: 0.5,
   },
 });
 
@@ -33,10 +38,14 @@ export default function GoalItem(prop: GoalProp) {
   }
 
   return (
-    <Pressable onPress={() => deleteGoal(prop.goal.id)}>
-      <View style={goalStyles.goalItemView}>
+    <View style={goalStyles.goalItemView}>
+      <Pressable
+        onPress={() => deleteGoal(prop.goal.id)}
+        android_ripple={{ color: "#210644" }}
+        style={(pressedState) => pressedState.pressed && goalStyles.pressedItem}
+      >
         <Text style={goalStyles.goalItemText}>{prop.goal.text}</Text>
-      </View>
-    </Pressable>
+      </Pressable>
+    </View>
   );
 }
