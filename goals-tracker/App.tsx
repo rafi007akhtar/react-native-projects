@@ -31,7 +31,9 @@ export default function App() {
         <Text>List of goals:</Text>
 
         {allGoals.map((goal, ind) => (
-          <Text key={ind}>{goal}</Text>
+          <View key={ind} style={styles.goalItemView}>
+            <Text style={styles.goalItemText}>{goal}</Text>
+          </View>
         ))}
       </View>
     </View>
