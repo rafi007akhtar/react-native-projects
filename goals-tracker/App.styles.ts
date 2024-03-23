@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     flexDirection: "row", // NOTE: the default flex-direction in React Native is "column",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingBottom: 24,
+    marginBottom: 24,
     borderBottomWidth: 1,
     borderBottomColor: "#cccccc",
     flex: 1,
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   goalsContainer: {
-    flex: 3,
+    flex: 5,
   },
 });
 
