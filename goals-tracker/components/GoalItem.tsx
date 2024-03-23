@@ -1,5 +1,7 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { Goal } from "../models/goals.model";
+import { useAtom } from "jotai";
+import { goals } from "../global-states";
 
 type GoalProp = {
   goal: Goal;
@@ -24,9 +26,17 @@ const goalStyles = StyleSheet.create({
 });
 
 export default function GoalItem(prop: GoalProp) {
+  const [_allGoals, setAllGoals] = useAtom(goals);
+
+  function deleteGoal(goalId: string) {
+    setAllGoals((prev) => prev.filter((goal) => goal.id !== goalId));
+  }
+
   return (
-    <View style={goalStyles.goalItemView}>
-      <Text style={goalStyles.goalItemText}>{prop.goal.text}</Text>
-    </View>
+    <Pressable onPress={() => deleteGoal(prop.goal.id)}>
+      <View style={goalStyles.goalItemView}>
+        <Text style={goalStyles.goalItemText}>{prop.goal.text}</Text>
+      </View>
+    </Pressable>
   );
 }
