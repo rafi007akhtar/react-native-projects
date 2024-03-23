@@ -1,3 +1,4 @@
 import { atom } from "jotai";
+import { Goal } from "./models/goals.model";
 
-export const goals = atom([] as Array<string>);
+export const goals = atom([] as Array<Goal>);

@@ -10,9 +10,9 @@ export default function GoalsScroll() {
     <ScrollView persistentScrollbar={true}>
       <Text>List of goals:</Text>
 
-      {allGoals.map((goal, ind) => (
-        <View key={ind} style={styles.goalItemView}>
-          <Text style={styles.goalItemText}>{goal}</Text>
+      {allGoals.map((goal) => (
+        <View key={goal.id} style={styles.goalItemView}>
+          <Text style={styles.goalItemText}>{goal.text}</Text>
         </View>
       ))}
     </ScrollView>

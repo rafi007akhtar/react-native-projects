@@ -14,7 +14,12 @@ export default function App() {
   }
 
   function addGoalHandler() {
-    setAllGoals((prev) => prev.concat(enteredGoal));
+    setAllGoals((prev) =>
+      prev.concat({
+        id: Math.random().toString(),
+        text: enteredGoal,
+      })
+    );
   }
 
   return (
