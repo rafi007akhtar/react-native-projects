@@ -1,40 +1,35 @@
-import { useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <View style={styles.container}>
-      <View>
-        <Text style={styles.textStyles}>Hello, world.</Text>
+    <View style={styles.appContainer}>
+      <View style={styles.inputContainer}>
+        <TextInput style={styles.textInput} placeholder="Your course goal." />
+        <Button title="Add Goal"></Button>
       </View>
-      <Text style={styles.textStyles}>Count: {count}</Text>
 
-      <Button
-        title="Increment Count"
-        onPress={() => setCount((prev) => prev + 1)}
-      ></Button>
-      <Button
-        title="Decrement Count"
-        onPress={() => setCount((prev) => prev - 1)}
-        color="#563b6f"
-      ></Button>
+      <View>
+        <Text>List of goals ...</Text>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+  appContainer: {
+    padding: 50,
   },
-  textStyles: {
+  inputContainer: {
+    display: "flex", // by default it's already flex
+    flexDirection: "row", // NOTE: the default flex-direction in React Native is "column",
+    justifyContent: "space-between",
+  },
+  textInput: {
     borderWidth: 1,
+    borderColor: "#cccccc",
+    width: "80%",
+    marginRight: 8,
+    borderRadius: 4,
     padding: 8,
-    borderColor: "#563b6f",
-    margin: 16,
   },
 });
