@@ -1,7 +1,7 @@
-import { View, Text, FlatList } from "react-native";
-import styles from "../App.styles";
+import { FlatList } from "react-native";
 import { useAtom } from "jotai";
 import { goals } from "../global-states";
+import GoalItem from "./GoalItem";
 
 export default function GoalsList() {
   const [allGoals] = useAtom(goals);
@@ -13,11 +13,7 @@ export default function GoalsList() {
       // specify what the attribute containing the unique key in each item
       keyExtractor={(goalItem) => goalItem.id}
       // specify how each data item will be rendered on the list
-      renderItem={(dataItem) => (
-        <View style={styles.goalItemView}>
-          <Text style={styles.goalItemText}>{dataItem.item.text}</Text>
-        </View>
-      )}
+      renderItem={(dataItem) => <GoalItem goal={dataItem.item} />}
     />
   );
 }

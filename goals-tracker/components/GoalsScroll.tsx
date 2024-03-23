@@ -1,7 +1,7 @@
-import { ScrollView, View, Text } from "react-native";
-import styles from "../App.styles";
+import { ScrollView, Text } from "react-native";
 import { useAtom } from "jotai";
 import { goals } from "../global-states";
+import GoalItem from "./GoalItem";
 
 /* ScrollView needs bounded height.
 So wrap it inside a View ideally with some flex property to it. */
@@ -14,9 +14,7 @@ export default function GoalsScroll() {
       <Text>List of goals:</Text>
 
       {allGoals.map((goal) => (
-        <View key={goal.id} style={styles.goalItemView}>
-          <Text style={styles.goalItemText}>{goal.text}</Text>
-        </View>
+        <GoalItem goal={goal} key={goal.id} />
       ))}
     </ScrollView>
   );
