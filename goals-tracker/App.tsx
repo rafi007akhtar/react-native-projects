@@ -1,9 +1,10 @@
-import { Button, Text, TextInput, View, ScrollView } from "react-native";
+import { Button, TextInput, View } from "react-native";
 import styles from "./App.styles";
 import { useState } from "react";
 import { useAtom } from "jotai";
 import { goals } from "./global-states";
 import GoalsScroll from "./components/GoalsScroll";
+import GoalsList from "./components/GoalsList";
 
 export default function App() {
   const [enteredGoal, setEnteredGoal] = useState("");
@@ -34,9 +35,10 @@ export default function App() {
       </View>
 
       <View style={styles.goalsContainer}>
-        {/* ScrollView needs bounded height.
-        So wrap it inside a View ideally with some flex property to it. */}
-        <GoalsScroll />
+        {/* Uncomment for scroll view. Commenting out because FlatList is better as it renders items lazily. */}
+        {/* <GoalsScroll /> */}
+
+        <GoalsList />
       </View>
     </View>
   );

@@ -3,6 +3,9 @@ import styles from "../App.styles";
 import { useAtom } from "jotai";
 import { goals } from "../global-states";
 
+/* ScrollView needs bounded height.
+So wrap it inside a View ideally with some flex property to it. */
+
 export default function GoalsScroll() {
   const [allGoals] = useAtom(goals);
 
