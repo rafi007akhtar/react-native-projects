@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { BaseProp } from "../models/baseTypes";
+import { PrimaryBtnProps } from "../models/baseTypes";
 
-const PrimaryButton: React.FC<BaseProp> = function (props) {
+const PrimaryButton: React.FC<PrimaryBtnProps> = function (props) {
   return (
     <View style={styles.outerContainer}>
       <Pressable
@@ -11,6 +11,7 @@ const PrimaryButton: React.FC<BaseProp> = function (props) {
             : styles.innerContainer
         }
         android_ripple={{ color: "#640233" }}
+        onPress={props.onClick}
       >
         <Text style={styles.buttonText}>{props.children}</Text>
       </Pressable>
