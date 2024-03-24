@@ -14,7 +14,7 @@ export default function App() {
       <Button
         title="Add new goal"
         onPress={() => setShowModal(true)}
-        color="#438a49"
+        color="#2e1f3c"
       />
 
       {showModal && <GoalInput />}
