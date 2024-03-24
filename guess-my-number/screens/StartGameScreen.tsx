@@ -10,8 +10,10 @@ export default function StartGameScreen() {
         maxLength={2}
         keyboardType="number-pad"
       />
-      <PrimaryButton>Reset</PrimaryButton>
-      <PrimaryButton>Confirm</PrimaryButton>
+      <View style={styles.buttonsContainer}>
+        <PrimaryButton>Reset</PrimaryButton>
+        <PrimaryButton>Confirm</PrimaryButton>
+      </View>
     </View>
   );
 }
@@ -24,6 +26,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
     backgroundColor: "#4e0329",
     borderRadius: 8,
+    alignItems: "center",
 
     // SHADOW TIME!
     // shadows in React Native are different than in CSS; there's no box-shadow property
@@ -46,5 +49,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     width: 50,
     textAlign: "center",
+  },
+
+  buttonsContainer: {
+    flexDirection: "row",
+    marginVertical: 16,
   },
 });
