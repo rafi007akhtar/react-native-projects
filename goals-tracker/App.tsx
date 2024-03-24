@@ -5,26 +5,30 @@ import GoalsList from "./components/GoalsList";
 import GoalInput from "./components/GoalInput";
 import { useAtom } from "jotai";
 import { showNewGoalsModal } from "./global-states";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
   const [showModal, setShowModal] = useAtom(showNewGoalsModal);
 
   return (
-    <View style={styles.appContainer}>
-      <Button
-        title="Add new goal"
-        onPress={() => setShowModal(true)}
-        color="#2e1f3c"
-      />
+    <>
+      <StatusBar style="light" />
+      <View style={styles.appContainer}>
+        <Button
+          title="Add new goal"
+          onPress={() => setShowModal(true)}
+          color="#2e1f3c"
+        />
 
-      {showModal && <GoalInput />}
+        {showModal && <GoalInput />}
 
-      <View style={styles.goalsContainer}>
-        {/* Uncomment for scroll view. Commenting out because FlatList is better as it renders items lazily. */}
-        {/* <GoalsScroll /> */}
+        <View style={styles.goalsContainer}>
+          {/* Uncomment for scroll view. Commenting out because FlatList is better as it renders items lazily. */}
+          {/* <GoalsScroll /> */}
 
-        <GoalsList />
+          <GoalsList />
+        </View>
       </View>
-    </View>
+    </>
   );
 }
