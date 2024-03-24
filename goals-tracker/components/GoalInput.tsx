@@ -1,4 +1,11 @@
-import { View, TextInput, Button, StyleSheet, Modal } from "react-native";
+import {
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  Modal,
+  Image,
+} from "react-native";
 import { useAtom } from "jotai";
 import { useState } from "react";
 import { goals, showNewGoalsModal } from "../global-states";
@@ -9,18 +16,19 @@ const styles = StyleSheet.create({
     // flexDirection: "row", // NOTE: the default flex-direction in React Native is "column",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 24,
-    borderBottomWidth: 1,
-    borderBottomColor: "#cccccc",
-    flex: 1,
-    paddingHorizontal: 16,
+    padding: 16,
+    backgroundColor: "#311b6b",
+    height: "50%",
+    marginTop: "auto",
   },
   textInput: {
     borderWidth: 1,
-    borderColor: "#cccccc",
+    borderColor: "#e4d0ff",
+    backgroundColor: "#e4d0ff",
+    color: "#120438",
     width: "100%",
-    borderRadius: 4,
-    padding: 8,
+    borderRadius: 6,
+    padding: 16,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -29,6 +37,15 @@ const styles = StyleSheet.create({
   button: {
     width: "30%",
     marginHorizontal: 8,
+  },
+  image: {
+    width: 100,
+    height: 100,
+    margin: 20,
+  },
+
+  modal: {
+    justifyContent: "flex-end",
   },
 });
 
@@ -58,8 +75,17 @@ export default function GoalInput() {
   }
 
   return (
-    <Modal visible={showModal} animationType="slide">
+    <Modal
+      visible={showModal}
+      animationType="slide"
+      style={styles.modal}
+      transparent={true}
+    >
       <View style={styles.inputContainer}>
+        <Image
+          source={require("../assets/images/goal.png")}
+          style={styles.image}
+        />
         <TextInput
           style={styles.textInput}
           placeholder="Your course goal."
@@ -69,10 +95,18 @@ export default function GoalInput() {
 
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
-            <Button title="Add Goal" onPress={addGoalHandler}></Button>
+            <Button
+              title="Add Goal"
+              onPress={addGoalHandler}
+              color="#5e0acc"
+            ></Button>
           </View>
           <View style={styles.button}>
-            <Button title="Cancel" onPress={() => setShowModal(false)}></Button>
+            <Button
+              title="Cancel"
+              onPress={() => setShowModal(false)}
+              color="#f31282"
+            ></Button>
           </View>
         </View>
       </View>
