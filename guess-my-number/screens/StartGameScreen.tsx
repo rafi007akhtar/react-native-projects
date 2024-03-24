@@ -1,18 +1,41 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import { Alert, StyleSheet, TextInput, View } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 import { iShadow } from "../utils/style-helpers.utils";
+import { useAtom } from "jotai";
+import { numberToGuess } from "../global-states";
 
 export default function StartGameScreen() {
+  const [enteredNumStr, setEnteredNumStr] = useAtom(numberToGuess);
+
+  function confirmEnteredNumber() {
+    const enteredNum = +enteredNumStr;
+    if (!enteredNum || enteredNum <= 0 || enteredNum > 99) {
+      Alert.alert(
+        "Number invalid or out of range.",
+        "Number needs to be between 1 and 99.",
+        [{ onPress: resetEnteredNumber, text: "Close", style: "destructive" }]
+      );
+    }
+  }
+
+  function resetEnteredNumber() {
+    setEnteredNumStr("");
+  }
+
   return (
     <View style={styles.inputContainer}>
       <TextInput
         style={styles.numberInput}
         maxLength={2}
         keyboardType="number-pad"
+        value={enteredNumStr}
+        onChangeText={(changedNum) => {
+          setEnteredNumStr(changedNum);
+        }}
       />
       <View style={styles.buttonsContainer}>
-        <PrimaryButton>Reset</PrimaryButton>
-        <PrimaryButton>Confirm</PrimaryButton>
+        <PrimaryButton onClick={resetEnteredNumber}>Reset</PrimaryButton>
+        <PrimaryButton onClick={confirmEnteredNumber}>Confirm</PrimaryButton>
       </View>
     </View>
   );
