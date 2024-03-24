@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     // flexDirection: "row", // NOTE: the default flex-direction in React Native is "column",
     justifyContent: "center",
     alignItems: "center",
-    padding: 16,
+    paddingHorizontal: 16,
     backgroundColor: "#311b6b",
     height: "50%",
     marginTop: "auto",
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
 
   modal: {
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
   },
 });
 
@@ -70,8 +70,6 @@ export default function GoalInput() {
       })
     );
     setEnteredGoal("");
-
-    setShowModal(false);
   }
 
   return (
@@ -88,7 +86,7 @@ export default function GoalInput() {
         />
         <TextInput
           style={styles.textInput}
-          placeholder="Your course goal."
+          placeholder="Enter your goal."
           onChangeText={goalInputHandler}
           value={enteredGoal}
         />
@@ -103,9 +101,9 @@ export default function GoalInput() {
           </View>
           <View style={styles.button}>
             <Button
-              title="Cancel"
+              title={enteredGoal ? "Cancel" : "Done"}
               onPress={() => setShowModal(false)}
-              color="#f31282"
+              color={enteredGoal ? "#f31282" : "#20554a"}
             ></Button>
           </View>
         </View>
