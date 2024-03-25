@@ -3,6 +3,7 @@ import PrimaryButton from "../components/PrimaryButton";
 import { iShadow } from "../utils/style-helpers.utils";
 import { useAtom } from "jotai";
 import { numberConfirmedFlag, numberToGuess } from "../global-states";
+import { colors } from "../utils/constants";
 
 export default function StartGameScreen() {
   const [enteredNumStr, setEnteredNumStr] = useAtom(numberToGuess);
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     padding: 16,
     marginTop: 100,
     marginHorizontal: 24,
-    backgroundColor: "#3b021f",
+    backgroundColor: colors.PRIMARY_800,
     borderRadius: 8,
     alignItems: "center",
 
@@ -67,8 +68,8 @@ const styles = StyleSheet.create({
   numberInput: {
     height: 50,
     fontSize: 32,
-    color: "#ddb52f",
-    borderBottomColor: "#ddb52f",
+    color: colors.ACCENT_500,
+    borderBottomColor: colors.ACCENT_500,
     borderBottomWidth: 2,
     marginVertical: 8,
     fontWeight: "bold",

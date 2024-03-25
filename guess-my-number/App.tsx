@@ -10,6 +10,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import GameScreen from "./screens/GameScreen";
 import { useAtom } from "jotai";
 import { numberConfirmedFlag } from "./global-states";
+import { colors } from "./utils/constants";
 
 function Wrapper(props: any) {
   const iOS = Platform.OS === "ios";
@@ -26,7 +27,7 @@ export default function App() {
 
   return (
     <LinearGradient
-      colors={["#4e0329", "#ddb52f"]}
+      colors={[colors.PRIMARY_700, colors.ACCENT_500]}
       style={styles.rootContainer}
     >
       <ImageBackground
