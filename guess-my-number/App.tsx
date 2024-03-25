@@ -9,8 +9,9 @@ import StartGameScreen from "./screens/StartGameScreen";
 import { LinearGradient } from "expo-linear-gradient";
 import GameScreen from "./screens/GameScreen";
 import { useAtom } from "jotai";
-import { numberConfirmedFlag } from "./global-states";
+import { gameIsOverAtom, numberConfirmedFlag } from "./global-states";
 import { colors } from "./utils/constants";
+import GameOverScreen from "./screens/GameOverScreen";
 
 function Wrapper(props: any) {
   const iOS = Platform.OS === "ios";
@@ -24,6 +25,17 @@ function Wrapper(props: any) {
 
 export default function App() {
   const [isNumberConfirmed] = useAtom(numberConfirmedFlag);
+  const [gameIsOver] = useAtom(gameIsOverAtom);
+
+  let screen = <StartGameScreen />;
+
+  if (isNumberConfirmed) {
+    screen = <GameScreen />;
+  }
+
+  if (gameIsOver) {
+    screen = <GameOverScreen />;
+  }
 
   return (
     <LinearGradient
@@ -36,9 +48,7 @@ export default function App() {
         style={styles.rootContainer}
         imageStyle={styles.backgroundImage}
       >
-        <Wrapper style={styles.rootContainer}>
-          {isNumberConfirmed ? <GameScreen /> : <StartGameScreen />}
-        </Wrapper>
+        <Wrapper style={styles.rootContainer}>{screen}</Wrapper>
       </ImageBackground>
     </LinearGradient>
   );
