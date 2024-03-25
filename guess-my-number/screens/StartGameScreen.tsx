@@ -2,10 +2,11 @@ import { Alert, StyleSheet, TextInput, View } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 import { iShadow } from "../utils/style-helpers.utils";
 import { useAtom } from "jotai";
-import { numberToGuess } from "../global-states";
+import { numberConfirmedFlag, numberToGuess } from "../global-states";
 
 export default function StartGameScreen() {
   const [enteredNumStr, setEnteredNumStr] = useAtom(numberToGuess);
+  const [_, setNumberConfirmedFlag] = useAtom(numberConfirmedFlag);
 
   function confirmEnteredNumber() {
     const enteredNum = +enteredNumStr;
@@ -15,6 +16,8 @@ export default function StartGameScreen() {
         "Number needs to be between 1 and 99.",
         [{ onPress: resetEnteredNumber, text: "Close", style: "destructive" }]
       );
+    } else {
+      setNumberConfirmedFlag(true);
     }
   }
 
