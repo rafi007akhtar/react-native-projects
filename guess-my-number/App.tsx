@@ -1,8 +1,13 @@
 import { ImageBackground, StyleSheet } from "react-native";
 import StartGameScreen from "./screens/StartGameScreen";
 import { LinearGradient } from "expo-linear-gradient";
+import GameScreen from "./screens/GameScreen";
+import { useAtom } from "jotai";
+import { numberConfirmedFlag } from "./global-states";
 
 export default function App() {
+  const [isNumberConfirmed] = useAtom(numberConfirmedFlag);
+
   return (
     <LinearGradient
       colors={["#4e0329", "#ddb52f"]}
@@ -13,7 +18,7 @@ export default function App() {
         style={styles.rootContainer}
         imageStyle={styles.backgroundImage}
       >
-        <StartGameScreen />
+        {isNumberConfirmed ? <GameScreen /> : <StartGameScreen />}
       </ImageBackground>
     </LinearGradient>
   );
