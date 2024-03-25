@@ -1,20 +1,40 @@
 import { useAtom } from "jotai";
 import { Alert, StyleSheet, Text, View } from "react-native";
-import { numberToGuess } from "../global-states";
+import { gameIsOverAtom, numberToGuess } from "../global-states";
 import Title from "../components/Title";
 import { generateRandomBetween } from "../utils/common.utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NumberContainer from "../components/NumberContainer";
 import PrimaryButton from "../components/PrimaryButton";
 
+const initRange = [1, 100];
+
 export default function GameScreen() {
   const [userNumber] = useAtom(numberToGuess);
-  const [range, setRange] = useState([1, 100]);
-  const [min, max] = range;
+  const [_gameIsOver, setGameIsOver] = useAtom(gameIsOverAtom);
 
-  const initalGuess = generateRandomBetween(min, max, +userNumber);
+  const [range, setRange] = useState(initRange);
+
+  /**
+   * NOTE: do NOT use `range` values inside the function below as params
+   * Reason: that variable gets re-evaluated every time state changes
+   * So, every time, the initial guess call is done. But we need the call to happen only once, that is, when the component executes for the first time.
+   * Calling it everytime with userNumber to exclude may result in trying to generate invalid range.
+   * And that will crash the app.
+   * Therefore, to avoid that, use hardcoded range vals that do not change over time.
+   */
+  const initalGuess = generateRandomBetween(
+    initRange[0],
+    initRange[1],
+    +userNumber
+  );
   const [currentGuess, setCurrentGuess] = useState(initalGuess);
-  const [numberIsGuessed, setNumberIsGuessed] = useState(false);
+
+  useEffect(() => {
+    if (currentGuess === +userNumber) {
+      setGameIsOver(true);
+    }
+  }, [currentGuess]);
 
   function updateTheGuess(direction: "+" | "-") {
     if (
@@ -31,16 +51,12 @@ export default function GameScreen() {
     if (direction === "-") {
       max = currentGuess;
     } else {
-      min = currentGuess;
+      min = currentGuess + 1;
     }
     setRange([min, max]);
 
     const updatedGuess = generateRandomBetween(min, max, currentGuess);
     setCurrentGuess(updatedGuess);
-
-    if (updatedGuess === +userNumber) {
-      setNumberIsGuessed(true);
-    }
   }
 
   return (
@@ -50,19 +66,15 @@ export default function GameScreen() {
 
       <View>
         <Text>Higher or lower?</Text>
-        {!numberIsGuessed && (
-          <View style={styles.buttonsContainer}>
-            <PrimaryButton onClick={() => updateTheGuess("-")}>
-              LOWER
-            </PrimaryButton>
-            <PrimaryButton onClick={() => updateTheGuess("+")}>
-              HIGHER
-            </PrimaryButton>
-          </View>
-        )}
+        <View style={styles.buttonsContainer}>
+          <PrimaryButton onClick={() => updateTheGuess("-")}>
+            LOWER
+          </PrimaryButton>
+          <PrimaryButton onClick={() => updateTheGuess("+")}>
+            HIGHER
+          </PrimaryButton>
+        </View>
       </View>
-
-      {numberIsGuessed && <Text>You guessed the number</Text>}
 
       {/* TODO: view for log rounds */}
     </View>
