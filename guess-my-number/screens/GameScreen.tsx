@@ -6,6 +6,8 @@ import { generateRandomBetween } from "../utils/common.utils";
 import { useEffect, useState } from "react";
 import NumberContainer from "../components/NumberContainer";
 import PrimaryButton from "../components/PrimaryButton";
+import Card from "../components/Card";
+import InstructionText from "../components/InstructionText";
 
 const initRange = [1, 100];
 
@@ -64,8 +66,10 @@ export default function GameScreen() {
       <Title>Opponent's guess</Title>
       <NumberContainer>{currentGuess}</NumberContainer>
 
-      <View>
-        <Text>Higher or lower?</Text>
+      <Card>
+        <InstructionText style={styles.textInstruction}>
+          Higher or lower?
+        </InstructionText>
         <View style={styles.buttonsContainer}>
           <PrimaryButton onClick={() => updateTheGuess("-")}>
             LOWER
@@ -74,7 +78,7 @@ export default function GameScreen() {
             HIGHER
           </PrimaryButton>
         </View>
-      </View>
+      </Card>
 
       {/* TODO: view for log rounds */}
     </View>
@@ -87,7 +91,11 @@ const styles = StyleSheet.create({
     padding: 16,
     marginTop: 50,
   },
+  textInstruction: {
+    marginBottom: 16,
+  },
   buttonsContainer: {
     flexDirection: "row",
+    marginBottom: 16,
   },
 });

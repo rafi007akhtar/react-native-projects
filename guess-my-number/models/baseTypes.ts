@@ -7,3 +7,7 @@ export type BaseProp = {
 export interface PrimaryBtnProps extends BaseProp {
   onClick?: () => {} | void;
 }
+
+export interface StylesProp extends BaseProp {
+  style?: object;
+}
