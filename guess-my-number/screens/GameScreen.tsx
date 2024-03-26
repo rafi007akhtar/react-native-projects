@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
 import { gamePlayAtom } from "../global-states";
 import Title from "../components/Title";
 import { generateRandomBetween } from "../utils/common.utils";
@@ -9,6 +9,7 @@ import PrimaryButton from "../components/PrimaryButton";
 import Card from "../components/Card";
 import InstructionText from "../components/InstructionText";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import GuessLogItem from "../components/GuessLogItem";
 
 const initRange = [1, 100];
 
@@ -16,6 +17,7 @@ export default function GameScreen() {
   const [gamePlay, setGamePlay] = useAtom(gamePlayAtom);
 
   const [range, setRange] = useState(initRange);
+  const [guessRounds, setGuessRounds] = useState<number[]>([]);
 
   /**
    * NOTE: do NOT use `range` values inside the function below as params
@@ -65,6 +67,7 @@ export default function GameScreen() {
 
     const updatedGuess = generateRandomBetween(min, max, currentGuess);
     setCurrentGuess(updatedGuess);
+    setGuessRounds((curr) => [updatedGuess, ...curr]);
   }
 
   return (
@@ -86,7 +89,18 @@ export default function GameScreen() {
         </View>
       </Card>
 
-      {/* TODO: view for log rounds */}
+      <View style={styles.listContainer}>
+        <FlatList
+          data={guessRounds}
+          renderItem={(dataItem) => (
+            <GuessLogItem
+              guessNumber={gamePlay.numberOfGuesses - dataItem.index}
+              guessValue={dataItem.item}
+            />
+          )}
+          keyExtractor={(item) => `${item}`}
+        />
+      </View>
     </View>
   );
 }
@@ -103,5 +117,9 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: "row",
     marginBottom: 16,
+  },
+  listContainer: {
+    flex: 1,
+    padding: 16,
   },
 });
