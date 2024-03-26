@@ -1,9 +1,10 @@
-import { Alert, StyleSheet, TextInput, View } from "react-native";
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 import { iShadow } from "../utils/style-helpers.utils";
 import { useAtom } from "jotai";
 import { numberConfirmedFlag, numberToGuess } from "../global-states";
 import { colors } from "../utils/constants";
+import Title from "../components/Title";
 
 export default function StartGameScreen() {
   const [enteredNumStr, setEnteredNumStr] = useAtom(numberToGuess);
@@ -27,29 +28,42 @@ export default function StartGameScreen() {
   }
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.numberInput}
-        maxLength={2}
-        keyboardType="number-pad"
-        value={enteredNumStr}
-        onChangeText={(changedNum) => {
-          setEnteredNumStr(changedNum);
-        }}
-      />
-      <View style={styles.buttonsContainer}>
-        <PrimaryButton onClick={resetEnteredNumber}>Reset</PrimaryButton>
-        <PrimaryButton onClick={confirmEnteredNumber}>Confirm</PrimaryButton>
+    <View style={styles.screenContainer}>
+      <Title>Guess my number</Title>
+      <View style={styles.inputContainer}>
+        <Text style={styles.textInstruction}>
+          Enter a number for the app to guess.
+        </Text>
+        <TextInput
+          style={styles.numberInput}
+          maxLength={2}
+          keyboardType="number-pad"
+          value={enteredNumStr}
+          onChangeText={(changedNum) => {
+            setEnteredNumStr(changedNum);
+          }}
+        />
+        <View style={styles.buttonsContainer}>
+          <PrimaryButton onClick={resetEnteredNumber}>Reset</PrimaryButton>
+          <PrimaryButton onClick={confirmEnteredNumber}>Confirm</PrimaryButton>
+        </View>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  inputContainer: {
+  screenContainer: {
     padding: 16,
-    marginTop: 100,
+    marginTop: 50,
+    flex: 1,
+    alignItems: "center",
+  },
+
+  inputContainer: {
     marginHorizontal: 24,
+    marginTop: 40,
+    padding: 16,
     backgroundColor: colors.PRIMARY_800,
     borderRadius: 8,
     alignItems: "center",
@@ -63,6 +77,11 @@ const styles = StyleSheet.create({
 
     // custom iOS solution (built on top of existing iOS solution)
     ...iShadow("black", [0, 2], 0.25, 6),
+  },
+
+  textInstruction: {
+    color: colors.ACCENT_500,
+    fontSize: 18,
   },
 
   numberInput: {
