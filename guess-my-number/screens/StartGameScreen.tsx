@@ -63,11 +63,11 @@ const styles = StyleSheet.create({
   numberInput: {
     height: 50,
     fontSize: 32,
+    fontFamily: "open-sans-bold",
     color: colors.ACCENT_500,
     borderBottomColor: colors.ACCENT_500,
     borderBottomWidth: 2,
     marginVertical: 8,
-    fontWeight: "bold",
     width: 50,
     textAlign: "center",
   },

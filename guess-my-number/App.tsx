@@ -12,6 +12,11 @@ import { useAtom } from "jotai";
 import { gameIsOverAtom, numberConfirmedFlag } from "./global-states";
 import { colors } from "./utils/constants";
 import GameOverScreen from "./screens/GameOverScreen";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
+
+SplashScreen.preventAutoHideAsync();
 
 function Wrapper(props: any) {
   const iOS = Platform.OS === "ios";
@@ -26,6 +31,24 @@ function Wrapper(props: any) {
 export default function App() {
   const [isNumberConfirmed] = useAtom(numberConfirmedFlag);
   const [gameIsOver] = useAtom(gameIsOverAtom);
+
+  const [fontsLoaded] = useFonts({
+    "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
+    "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
+  });
+
+  useEffect(() => {
+    async function prepare() {
+      return fontsLoaded ? SplashScreen.hideAsync() : null;
+    }
+    prepare();
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  } else {
+    SplashScreen.hideAsync();
+  }
 
   let screen = <StartGameScreen />;
 
