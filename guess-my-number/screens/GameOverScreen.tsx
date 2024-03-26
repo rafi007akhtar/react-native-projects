@@ -59,5 +59,6 @@ const styles = StyleSheet.create({
     fontFamily: "open-sans",
     fontSize: 24, // fontSize cascades only inside nested Text components
     textAlign: "center",
+    marginBottom: 24,
   },
 });
