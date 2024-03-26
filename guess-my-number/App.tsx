@@ -9,7 +9,7 @@ import StartGameScreen from "./screens/StartGameScreen";
 import { LinearGradient } from "expo-linear-gradient";
 import GameScreen from "./screens/GameScreen";
 import { useAtom } from "jotai";
-import { gameIsOverAtom, numberConfirmedFlag } from "./global-states";
+import { gamePlayAtom } from "./global-states";
 import { colors } from "./utils/constants";
 import GameOverScreen from "./screens/GameOverScreen";
 import { useFonts } from "expo-font";
@@ -29,8 +29,7 @@ function Wrapper(props: any) {
 }
 
 export default function App() {
-  const [isNumberConfirmed] = useAtom(numberConfirmedFlag);
-  const [gameIsOver] = useAtom(gameIsOverAtom);
+  const [gamePlay] = useAtom(gamePlayAtom);
 
   const [fontsLoaded] = useFonts({
     "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
@@ -52,11 +51,11 @@ export default function App() {
 
   let screen = <StartGameScreen />;
 
-  if (isNumberConfirmed) {
+  if (gamePlay.numberConfirmedFlag) {
     screen = <GameScreen />;
   }
 
-  if (gameIsOver) {
+  if (gamePlay.gameIsOver) {
     screen = <GameOverScreen />;
   }
 

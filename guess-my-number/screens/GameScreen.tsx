@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { Alert, StyleSheet, View } from "react-native";
-import { gameIsOverAtom, numberToGuess } from "../global-states";
+import { gamePlayAtom } from "../global-states";
 import Title from "../components/Title";
 import { generateRandomBetween } from "../utils/common.utils";
 import { useEffect, useState } from "react";
@@ -13,8 +13,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 const initRange = [1, 100];
 
 export default function GameScreen() {
-  const [userNumber] = useAtom(numberToGuess);
-  const [_gameIsOver, setGameIsOver] = useAtom(gameIsOverAtom);
+  const [gamePlay, setGamePlay] = useAtom(gamePlayAtom);
 
   const [range, setRange] = useState(initRange);
 
@@ -29,20 +28,26 @@ export default function GameScreen() {
   const initalGuess = generateRandomBetween(
     initRange[0],
     initRange[1],
-    +userNumber
+    +gamePlay.numberToGuess
   );
   const [currentGuess, setCurrentGuess] = useState(initalGuess);
 
   useEffect(() => {
-    if (currentGuess === +userNumber) {
-      setGameIsOver(true);
+    if (currentGuess === +gamePlay.numberToGuess) {
+      setGamePlay((curr) => {
+        return { ...curr, gameIsOver: true };
+      });
     }
   }, [currentGuess]);
 
   function updateTheGuess(direction: "+" | "-") {
+    setGamePlay((curr) => {
+      return { ...curr, numberOfGuesses: curr.numberOfGuesses + 1 };
+    });
+
     if (
-      (direction === "-" && currentGuess < +userNumber) ||
-      (direction === "+" && currentGuess > +userNumber)
+      (direction === "-" && currentGuess < +gamePlay.numberToGuess) ||
+      (direction === "+" && currentGuess > +gamePlay.numberToGuess)
     ) {
       Alert.alert("Incorrect Hint", "Please try that again.", [
         { text: "Okay", style: "cancel" },

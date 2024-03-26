@@ -1,19 +1,17 @@
-import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, StyleSheet, TextInput, View } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
-import { iShadow } from "../utils/style-helpers.utils";
 import { useAtom } from "jotai";
-import { numberConfirmedFlag, numberToGuess } from "../global-states";
+import { gamePlayAtom } from "../global-states";
 import { colors } from "../utils/constants";
 import Title from "../components/Title";
 import InstructionText from "../components/InstructionText";
 import Card from "../components/Card";
 
 export default function StartGameScreen() {
-  const [enteredNumStr, setEnteredNumStr] = useAtom(numberToGuess);
-  const [_, setNumberConfirmedFlag] = useAtom(numberConfirmedFlag);
+  const [gamePlay, setGamePlay] = useAtom(gamePlayAtom);
 
   function confirmEnteredNumber() {
-    const enteredNum = +enteredNumStr;
+    const enteredNum = +gamePlay.numberToGuess;
     if (!enteredNum || enteredNum <= 0 || enteredNum > 99) {
       Alert.alert(
         "Number invalid or out of range.",
@@ -21,12 +19,16 @@ export default function StartGameScreen() {
         [{ onPress: resetEnteredNumber, text: "Close", style: "destructive" }]
       );
     } else {
-      setNumberConfirmedFlag(true);
+      setGamePlay((curr) => {
+        return { ...curr, numberConfirmedFlag: true };
+      });
     }
   }
 
   function resetEnteredNumber() {
-    setEnteredNumStr("");
+    setGamePlay((curr) => {
+      return { ...curr, numberToGuess: "" };
+    });
   }
 
   return (
@@ -38,9 +40,11 @@ export default function StartGameScreen() {
           style={styles.numberInput}
           maxLength={2}
           keyboardType="number-pad"
-          value={enteredNumStr}
+          value={gamePlay.numberToGuess}
           onChangeText={(changedNum) => {
-            setEnteredNumStr(changedNum);
+            setGamePlay((curr) => {
+              return { ...curr, numberToGuess: changedNum };
+            });
           }}
         />
         <View style={styles.buttonsContainer}>

@@ -1,5 +1,10 @@
 import { atom } from "jotai";
 
-export const numberToGuess = atom("");
-export const numberConfirmedFlag = atom(false);
-export const gameIsOverAtom = atom(false);
+export const initState = {
+  numberToGuess: "",
+  numberConfirmedFlag: false,
+  gameIsOver: false,
+  numberOfGuesses: 0,
+};
+
+export const gamePlayAtom = atom(initState);
