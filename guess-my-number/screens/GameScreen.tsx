@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { gameIsOverAtom, numberToGuess } from "../global-states";
 import Title from "../components/Title";
 import { generateRandomBetween } from "../utils/common.utils";
@@ -8,6 +8,7 @@ import NumberContainer from "../components/NumberContainer";
 import PrimaryButton from "../components/PrimaryButton";
 import Card from "../components/Card";
 import InstructionText from "../components/InstructionText";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 const initRange = [1, 100];
 
@@ -72,10 +73,10 @@ export default function GameScreen() {
         </InstructionText>
         <View style={styles.buttonsContainer}>
           <PrimaryButton onClick={() => updateTheGuess("-")}>
-            LOWER
+            <Ionicons name="remove" size={24} color="white" />
           </PrimaryButton>
           <PrimaryButton onClick={() => updateTheGuess("+")}>
-            HIGHER
+            <Ionicons name="add" size={24} color="white" />
           </PrimaryButton>
         </View>
       </Card>
