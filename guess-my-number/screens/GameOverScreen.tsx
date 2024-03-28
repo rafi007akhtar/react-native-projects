@@ -5,6 +5,11 @@ import Title from "../components/Title";
 import { colors } from "../utils/constants";
 import Bold from "../components/Bold";
 import PrimaryButton from "../components/PrimaryButton";
+import { Dimensions } from "react-native";
+
+const window = Dimensions.get("window");
+const radiusToUse = window.height < 650 ? 150 : 300;
+const borderRadiusToUse = radiusToUse / 2;
 
 export default function GameOverScreen() {
   const [gamePlay, setGamePlay] = useAtom(gamePlayAtom);
@@ -43,10 +48,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   imageContainer: {
-    width: 300,
-    height: 300,
+    width: radiusToUse,
+    height: radiusToUse,
     borderWidth: 3,
-    borderRadius: 150,
+    borderRadius: borderRadiusToUse,
     borderColor: colors.PRIMARY_800,
     overflow: "hidden",
     margin: 36,
