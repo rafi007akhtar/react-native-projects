@@ -15,6 +15,7 @@ import GameOverScreen from "./screens/GameOverScreen";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -60,19 +61,22 @@ export default function App() {
   }
 
   return (
-    <LinearGradient
-      colors={[colors.PRIMARY_700, colors.ACCENT_500]}
-      style={styles.rootContainer}
-    >
-      <ImageBackground
-        source={require("./assets/images/background.png")}
-        resizeMode="cover"
+    <>
+      <StatusBar style="dark" />
+      <LinearGradient
+        colors={[colors.PRIMARY_700, colors.ACCENT_500]}
         style={styles.rootContainer}
-        imageStyle={styles.backgroundImage}
       >
-        <Wrapper style={styles.rootContainer}>{screen}</Wrapper>
-      </ImageBackground>
-    </LinearGradient>
+        <ImageBackground
+          source={require("./assets/images/background.png")}
+          resizeMode="cover"
+          style={styles.rootContainer}
+          imageStyle={styles.backgroundImage}
+        >
+          <Wrapper style={styles.rootContainer}>{screen}</Wrapper>
+        </ImageBackground>
+      </LinearGradient>
+    </>
   );
 }
 
