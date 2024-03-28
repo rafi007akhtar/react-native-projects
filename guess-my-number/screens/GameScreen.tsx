@@ -1,5 +1,11 @@
 import { useAtom } from "jotai";
-import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  StyleSheet,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import { gamePlayAtom } from "../global-states";
 import Title from "../components/Title";
 import { generateRandomBetween } from "../utils/common.utils";
@@ -18,6 +24,9 @@ export default function GameScreen() {
 
   const [range, setRange] = useState(initRange);
   const [guessRounds, setGuessRounds] = useState<number[]>([]);
+
+  const { height } = useWindowDimensions();
+  const topMargin = height > 400 ? 50 : 10;
 
   /**
    * NOTE: do NOT use `range` values inside the function below as params
@@ -71,7 +80,7 @@ export default function GameScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { marginTop: topMargin }]}>
       <View style={styles.titleContainer}>
         <Title>Opponent's guess</Title>
         <NumberContainer>{currentGuess}</NumberContainer>
