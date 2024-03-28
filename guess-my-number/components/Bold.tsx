@@ -1,5 +1,4 @@
-import { StyleSheet, Text } from "react-native";
-import { BaseProp } from "../models/baseTypes";
+import { Platform, StyleSheet, Text } from "react-native";
 import { colors } from "../utils/constants";
 
 export default function Bold(props: any) {
@@ -15,7 +14,10 @@ export default function Bold(props: any) {
 const styles = StyleSheet.create({
   boldTextHighlighted: {
     fontFamily: "open-sans-bold",
-    color: colors.PRIMARY_500,
+    color: Platform.select({
+      android: colors.PRIMARY_500,
+      ios: colors.PRIMARY_600,
+    }),
   },
   boldText: {
     fontFamily: "open-sans-bold",
