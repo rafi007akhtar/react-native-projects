@@ -1,7 +1,9 @@
-import { StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { BaseProp } from "../models/baseTypes";
 import { colors } from "../utils/constants";
 import { iShadow } from "../utils/style-helpers.utils";
+
+const deviceWidth = Dimensions.get("window").width;
 
 export default function Card(props: BaseProp) {
   return <View style={styles.cardContainer}>{props.children}</View>;
@@ -10,7 +12,7 @@ export default function Card(props: BaseProp) {
 const styles = StyleSheet.create({
   cardContainer: {
     marginHorizontal: 24,
-    marginTop: 40,
+    marginTop: deviceWidth < 450 ? 20 : 40,
     paddingHorizontal: 16,
     paddingTop: 16,
     backgroundColor: colors.PRIMARY_800,
