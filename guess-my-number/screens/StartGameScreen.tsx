@@ -1,5 +1,7 @@
 import {
   Alert,
+  KeyboardAvoidingView,
+  ScrollView,
   StyleSheet,
   TextInput,
   View,
@@ -41,31 +43,42 @@ export default function StartGameScreen() {
   }
 
   return (
-    <View style={[styles.inputContainer, { marginTop: topMargin }]}>
-      <Title>Guess my number</Title>
-      <Card>
-        <InstructionText>Enter a number for the app to guess.</InstructionText>
-        <TextInput
-          style={styles.numberInput}
-          maxLength={2}
-          keyboardType="number-pad"
-          value={gamePlay.numberToGuess}
-          onChangeText={(changedNum) => {
-            setGamePlay((curr) => {
-              return { ...curr, numberToGuess: changedNum };
-            });
-          }}
-        />
-        <View style={styles.buttonsContainer}>
-          <PrimaryButton onClick={resetEnteredNumber}>Reset</PrimaryButton>
-          <PrimaryButton onClick={confirmEnteredNumber}>Confirm</PrimaryButton>
+    <ScrollView style={styles.screen}>
+      <KeyboardAvoidingView style={styles.screen} behavior="position">
+        <View style={[styles.inputContainer, { marginTop: topMargin }]}>
+          <Title>Guess my number</Title>
+          <Card>
+            <InstructionText>
+              Enter a number for the app to guess.
+            </InstructionText>
+            <TextInput
+              style={styles.numberInput}
+              maxLength={2}
+              keyboardType="number-pad"
+              value={gamePlay.numberToGuess}
+              onChangeText={(changedNum) => {
+                setGamePlay((curr) => {
+                  return { ...curr, numberToGuess: changedNum };
+                });
+              }}
+            />
+            <View style={styles.buttonsContainer}>
+              <PrimaryButton onClick={resetEnteredNumber}>Reset</PrimaryButton>
+              <PrimaryButton onClick={confirmEnteredNumber}>
+                Confirm
+              </PrimaryButton>
+            </View>
+          </Card>
         </View>
-      </Card>
-    </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
   inputContainer: {
     padding: 16,
     marginTop: 50,
