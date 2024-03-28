@@ -1,4 +1,10 @@
-import { Alert, StyleSheet, TextInput, View } from "react-native";
+import {
+  Alert,
+  StyleSheet,
+  TextInput,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 import { useAtom } from "jotai";
 import { gamePlayAtom } from "../global-states";
@@ -9,6 +15,9 @@ import Card from "../components/Card";
 
 export default function StartGameScreen() {
   const [gamePlay, setGamePlay] = useAtom(gamePlayAtom);
+  const { height } = useWindowDimensions();
+
+  const topMargin = height > 400 ? 50 : 20;
 
   function confirmEnteredNumber() {
     const enteredNum = +gamePlay.numberToGuess;
@@ -32,7 +41,7 @@ export default function StartGameScreen() {
   }
 
   return (
-    <View style={styles.inputContainer}>
+    <View style={[styles.inputContainer, { marginTop: topMargin }]}>
       <Title>Guess my number</Title>
       <Card>
         <InstructionText>Enter a number for the app to guess.</InstructionText>
