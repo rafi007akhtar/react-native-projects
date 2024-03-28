@@ -72,8 +72,10 @@ export default function GameScreen() {
 
   return (
     <View style={styles.container}>
-      <Title>Opponent's guess</Title>
-      <NumberContainer>{currentGuess}</NumberContainer>
+      <View style={styles.titleContainer}>
+        <Title>Opponent's guess</Title>
+        <NumberContainer>{currentGuess}</NumberContainer>
+      </View>
 
       <Card>
         <InstructionText style={styles.textInstruction}>
@@ -110,6 +112,9 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     marginTop: 50,
+  },
+  titleContainer: {
+    alignItems: "center",
   },
   textInstruction: {
     marginBottom: 16,
