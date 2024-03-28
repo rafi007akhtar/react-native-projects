@@ -1,18 +1,23 @@
-import { Dimensions, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { BaseProp } from "../models/baseTypes";
 import { colors } from "../utils/constants";
 import { iShadow } from "../utils/style-helpers.utils";
-
-const deviceWidth = Dimensions.get("window").width;
+import { useSmallScreen } from "../hooks/useSmallScreen";
 
 export default function Card(props: BaseProp) {
-  return <View style={styles.cardContainer}>{props.children}</View>;
+  const { smallDevice } = useSmallScreen();
+
+  const marginTop = smallDevice ? 15 : 40;
+
+  return (
+    <View style={[styles.cardContainer, { marginTop }]}>{props.children}</View>
+  );
 }
 
 const styles = StyleSheet.create({
   cardContainer: {
     marginHorizontal: 24,
-    marginTop: deviceWidth < 450 ? 20 : 40,
+    marginTop: 40,
     paddingHorizontal: 16,
     paddingTop: 16,
     backgroundColor: colors.PRIMARY_800,
