@@ -2,8 +2,9 @@ import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import { CATEGORIES } from "../data/dummy-data";
 import CategoryTile from "../components/CategoryTile";
 import Category from "../models/category";
+import { CategoriesProps } from "../models/customTypes";
 
-export default function CategoriesScreen(props: { navigation?: any }) {
+export default function CategoriesScreen(props: CategoriesProps) {
   const navigation = props?.navigation;
 
   function tileClickHandler(dataItem: ListRenderItemInfo<Category>) {
