@@ -1,39 +1,29 @@
-import {
-  Image,
-  Platform,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { iShadow } from "../utils/styles.utl";
 import { MealItemProps } from "../models/customTypes";
+import { useNavigation } from "@react-navigation/native";
+import MealPreview from "./MealPreview";
 
 export default function MealItem(props: MealItemProps) {
-  const meal = props.meal;
+  const navigation = useNavigation<any>();
+
+  const { meal, categoryData } = props;
+
+  function mealPressHandler() {
+    navigation.navigate("MealDetails", { meal, categoryData });
+  }
 
   return (
     <View style={styles.container}>
       <Pressable
+        onPress={mealPressHandler}
         style={(pressedData) => [
           pressedData.pressed
             ? [styles.buttonPressed, { backgroundColor: "#ccc" }]
             : null,
         ]}
       >
-        <View>
-          <Image source={{ uri: meal.imageUrl }} style={styles.image} />
-          <Text style={styles.title}>{meal.title}</Text>
-        </View>
-        <View style={styles.details}>
-          <Text style={styles.detailsText}>{meal.duration} min</Text>
-          <Text style={styles.detailsText}>
-            {meal.complexity.toUpperCase()}
-          </Text>
-          <Text style={styles.detailsText}>
-            {meal.affordability.toUpperCase()}
-          </Text>
-        </View>
+        <MealPreview meal={meal} />
       </Pressable>
     </View>
   );
