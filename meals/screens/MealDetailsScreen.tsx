@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Button, ScrollView, StyleSheet, View } from "react-native";
 import { MealDetailsProps } from "../models/customTypes";
 import Meal from "../models/meal";
 import { useLayoutEffect } from "react";
@@ -6,6 +6,7 @@ import Category from "../models/category";
 import MealPreview from "../components/MealPreview";
 import Title from "../components/Title";
 import { List } from "../components/List";
+import Favorite from "../components/Favorite";
 
 export default function MealDetailsScreen(props: MealDetailsProps) {
   const params = props.route.params as any;
@@ -20,6 +21,7 @@ export default function MealDetailsScreen(props: MealDetailsProps) {
         backgroundColor: categoryData.color,
       },
       headerTintColor: "black",
+      headerRight: () => <Favorite mealId={meal.id} />,
     });
   }, [navigation]);
 
