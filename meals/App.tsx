@@ -1,8 +1,12 @@
 import { StyleSheet, Text } from "react-native";
 import CategoriesScreen from "./screens/CategoriesScreen";
 import { useFonts } from "expo-font";
-import { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import MealsOverviewScreen from "./screens/MealsOverviewScreen";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -13,15 +17,23 @@ export default function App() {
   let screen = <Text>Loading...</Text>;
 
   if (fontsLoaded) {
-    screen = <CategoriesScreen />;
+    screen = (
+      <>
+        <StatusBar style="auto" />
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="MealsCategories" component={CategoriesScreen} />
+            <Stack.Screen
+              name="MealsOverview"
+              component={MealsOverviewScreen}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </>
+    );
   }
 
-  return (
-    <>
-      <StatusBar style="inverted" />
-      {screen}
-    </>
-  );
+  return screen;
 }
 
 const styles = StyleSheet.create({
