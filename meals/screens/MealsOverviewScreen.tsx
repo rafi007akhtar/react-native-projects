@@ -20,7 +20,11 @@ export default function MealsOverviewScreen(props: any) {
       <FlatList
         data={matchingMeals}
         renderItem={(mealData) => (
-          <MealItem key={mealData.item.id} meal={mealData.item} />
+          <MealItem
+            key={mealData.item.id}
+            meal={mealData.item}
+            categoryData={categoryData}
+          />
         )}
         keyExtractor={(mealData) => mealData.id}
       />
