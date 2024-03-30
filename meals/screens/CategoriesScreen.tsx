@@ -1,8 +1,16 @@
-import { FlatList, StyleSheet, Text } from "react-native";
+import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import { CATEGORIES } from "../data/dummy-data";
 import CategoryTile from "../components/CategoryTile";
+import Category from "../models/category";
 
-export default function CategoriesScreen() {
+export default function CategoriesScreen(props: { navigation?: any }) {
+  const navigation = props?.navigation;
+
+  function tileClickHandler(dataItem: ListRenderItemInfo<Category>) {
+    const categoryData = dataItem.item;
+    navigation.navigate("MealsOverview", { categoryData }); // alternative: useNavigation
+  }
+
   return (
     <FlatList
       data={CATEGORIES}
@@ -12,9 +20,7 @@ export default function CategoriesScreen() {
           <CategoryTile
             title={title}
             color={color}
-            onClick={() => {
-              console.log(title, "clicked");
-            }}
+            onClick={() => tileClickHandler(dataItem)}
           />
         );
       }}
@@ -26,7 +32,5 @@ export default function CategoriesScreen() {
 }
 
 const styles = StyleSheet.create({
-  listContainer: {
-    marginTop: 12,
-  },
+  listContainer: {},
 });
