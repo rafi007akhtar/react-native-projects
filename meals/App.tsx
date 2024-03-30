@@ -5,6 +5,7 @@ import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
+import Category from "./models/category";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,13 +20,41 @@ export default function App() {
   if (fontsLoaded) {
     screen = (
       <>
-        <StatusBar style="auto" />
+        <StatusBar style="inverted" />
         <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen name="MealsCategories" component={CategoriesScreen} />
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: { backgroundColor: "#351401" },
+              contentStyle: {
+                backgroundColor: "#6d343370",
+              },
+              headerTitleAlign: "center",
+              headerTitleStyle: {
+                fontFamily: "product-sans",
+              },
+            }}
+          >
+            <Stack.Screen
+              name="MealsCategories"
+              component={CategoriesScreen}
+              options={{
+                title: "All Cateogries",
+                headerTintColor: "white",
+              }}
+            />
             <Stack.Screen
               name="MealsOverview"
               component={MealsOverviewScreen}
+              options={(opts) => {
+                const { route } = opts;
+                const catData: Category = (route.params as any)?.categoryData;
+                return {
+                  title: catData.title,
+                  headerStyle: {
+                    backgroundColor: catData.color,
+                  },
+                };
+              }}
             />
           </Stack.Navigator>
         </NavigationContainer>
