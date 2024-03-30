@@ -6,10 +6,8 @@ import {
   Text,
   View,
 } from "react-native";
-import Meal from "../models/meal";
 import { iShadow } from "../utils/styles.utl";
-
-type MealItemProps = { meal: Meal };
+import { MealItemProps } from "../models/customTypes";
 
 export default function MealItem(props: MealItemProps) {
   const meal = props.meal;
@@ -47,7 +45,7 @@ const styles = StyleSheet.create({
     margin: 16,
     borderRadius: 8,
     overflow: Platform.OS === "android" ? "hidden" : "visible",
-    backgroundColor: "white",
+    backgroundColor: "#dfdddd",
     elevation: 4,
     ...iShadow("black", [0, 2], 0.25, 8),
   },

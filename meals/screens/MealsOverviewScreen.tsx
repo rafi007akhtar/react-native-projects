@@ -11,6 +11,10 @@ export default function MealsOverviewScreen(props: any) {
     meal.categoryIds.includes(categoryId)
   );
 
+  // Title is set in the router itself
+  // Alternatively, use the navigation prop inside a useLayoutEffect
+  // and handle setting title in there through `navigation.setOptions({title: '...'})`
+
   return (
     <View style={styles.container}>
       <FlatList
