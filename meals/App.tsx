@@ -1,3 +1,5 @@
+import "react-native-gesture-handler";
+
 import { StyleSheet, Text } from "react-native";
 import CategoriesScreen from "./screens/CategoriesScreen";
 import { useFonts } from "expo-font";
@@ -7,8 +9,54 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import Category from "./models/category";
 import MealDetailsScreen from "./screens/MealDetailsScreen";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import FavoritesScreen from "./screens/FavoritesScreen";
+import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function DawerNavigator() {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#351401" },
+        sceneContainerStyle: {
+          backgroundColor: "#6d343370",
+        },
+        headerTitleAlign: "center",
+        headerTitleStyle: {
+          fontFamily: "product-sans",
+        },
+        headerTintColor: "white",
+        drawerContentStyle: { backgroundColor: "#351401" },
+        drawerInactiveTintColor: "white",
+        drawerActiveTintColor: "#351401",
+        drawerActiveBackgroundColor: "#e4baa1",
+      }}
+    >
+      <Drawer.Screen
+        name="Categories"
+        component={CategoriesScreen}
+        options={{
+          title: "All Categories",
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="list-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Favorites"
+        component={FavoritesScreen}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="heart-outline" color={color} size={size} />
+          ),
+        }}
+      />
+    </Drawer.Navigator>
+  );
+}
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -23,24 +71,12 @@ export default function App() {
       <>
         <StatusBar style="inverted" />
         <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{
-              headerStyle: { backgroundColor: "#351401" },
-              contentStyle: {
-                backgroundColor: "#6d343370",
-              },
-              headerTitleAlign: "center",
-              headerTitleStyle: {
-                fontFamily: "product-sans",
-              },
-            }}
-          >
+          <Stack.Navigator>
             <Stack.Screen
-              name="MealsCategories"
-              component={CategoriesScreen}
+              name="Drawer"
+              component={DawerNavigator}
               options={{
-                title: "All Cateogries",
-                headerTintColor: "white",
+                headerShown: false,
               }}
             />
             <Stack.Screen
