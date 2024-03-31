@@ -8,7 +8,7 @@ export interface MealItemProps {
 }
 
 export interface CategoriesProps {
-  route: RouteProp<ParamListBase, "MealsCategories">;
+  route: RouteProp<ParamListBase, string>;
   navigation: any;
 }
 
