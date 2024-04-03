@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "meals",
+    "name": "Meals Practice App",
     "slug": "meals",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,17 +14,25 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "versionCode": 1,
+      "package": "com.rafi007akhtar.meals"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-font"]
+    "plugins": ["expo-font"],
+    "extra": {
+      "eas": {
+        "projectId": "1e489477-9ebe-453e-8992-f24f86fe5d94"
+      }
+    }
   }
 }
