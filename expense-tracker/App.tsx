@@ -8,6 +8,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Text } from "react-native";
 import { useFonts } from "expo-font";
 import { globalStyles } from "./constants/styles";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -20,6 +21,7 @@ function ExpenseOverview() {
           fontFamily: globalStyles.fonts.SANS_REGULAR,
           alignItems: "center",
           justifyContent: "center",
+          marginBottom: 10,
         },
         headerTitleStyle: {
           fontFamily: globalStyles.fonts.SANS_REGULAR,
@@ -29,6 +31,12 @@ function ExpenseOverview() {
           backgroundColor: globalStyles.colors.primary500,
         },
         headerTintColor: "white",
+        tabBarStyle: {
+          backgroundColor: globalStyles.colors.primary500,
+          height: 75,
+        },
+        tabBarActiveTintColor: globalStyles.colors.accent500,
+        tabBarInactiveTintColor: globalStyles.colors.primary100,
       }}
     >
       <Tab.Screen
@@ -36,12 +44,28 @@ function ExpenseOverview() {
         component={RecentExpenses}
         options={{
           title: "Recent Expenses",
+          tabBarIcon: (props) => (
+            <MaterialIcons
+              name="hourglass-top"
+              color={props.color}
+              size={props.size}
+            />
+          ),
         }}
       />
       <Tab.Screen
         name="AllExpenses"
         component={AllExpenses}
-        options={{ title: "All Expenses" }}
+        options={{
+          title: "All Expenses",
+          tabBarIcon: (props) => (
+            <MaterialIcons
+              name="calendar-month"
+              size={props.size}
+              color={props.color}
+            />
+          ),
+        }}
       />
     </Tab.Navigator>
   );
