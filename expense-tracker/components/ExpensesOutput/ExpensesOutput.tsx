@@ -1,9 +1,10 @@
-import { Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import ExpensesSummary from "./ExpensesSummary";
 import { BaseProps } from "../../models/base.model";
 import { Expenses } from "../../models/expenses.model";
 import ExpensesList from "./ExpensesList";
 import { MOCK_EXPENSES } from "../../constants/mockData";
+import { globalStyles } from "../../constants/styles";
 
 interface ExpensesOutputProps extends BaseProps {
   expensesPeriod: string;
@@ -12,7 +13,7 @@ interface ExpensesOutputProps extends BaseProps {
 
 export default function ExpensesOutput(props: ExpensesOutputProps) {
   return (
-    <View>
+    <View style={styles.container}>
       <ExpensesSummary
         expenses={MOCK_EXPENSES}
         periodName={props.expensesPeriod}
@@ -21,3 +22,11 @@ export default function ExpensesOutput(props: ExpensesOutputProps) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 24,
+    backgroundColor: globalStyles.colors.primary700,
+  },
+});
