@@ -18,7 +18,7 @@ function ExpenseOverview() {
     <Tab.Navigator
       screenOptions={{
         tabBarLabelStyle: {
-          fontFamily: globalStyles.fonts.SANS_REGULAR,
+          fontFamily: globalStyles.fonts.SANS_BOLD,
           alignItems: "center",
           justifyContent: "center",
           marginBottom: 10,
