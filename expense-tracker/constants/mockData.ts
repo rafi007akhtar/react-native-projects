@@ -15,20 +15,32 @@ export const MOCK_EXPENSES: Expenses = [
   },
   {
     id: "e3",
-    amount: 33,
+    amount: 33.99,
     description: "A score of smores",
     date: new Date("2024-03-01"),
   },
   {
     id: "e4",
     amount: 44,
-    description: "A book",
+    description: "A bleak book",
     date: new Date("2024-04-01"),
   },
   {
     id: "e5",
     amount: 55,
-    description: "Another book",
+    description: "A bleaker book",
     date: new Date("2024-05-01"),
+  },
+  {
+    id: "e6",
+    amount: 66,
+    description: "Four fimly figurines",
+    date: new Date("2024-06-01"),
+  },
+  {
+    id: "e7",
+    amount: 77,
+    description: "Eight enticing eclairs",
+    date: new Date("2024-07-01"),
   },
 ];
