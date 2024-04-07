@@ -5,7 +5,7 @@ interface IconButtonProps {
   name?: string | any;
   size?: number;
   color?: string;
-  onPress?: () => {};
+  onPress?: () => void;
 }
 
 export default function IconButton(props: IconButtonProps) {
