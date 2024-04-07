@@ -5,6 +5,8 @@ import { Expenses } from "../../models/expenses.model";
 import ExpensesList from "./ExpensesList";
 import { MOCK_EXPENSES } from "../../constants/mockData";
 import { globalStyles } from "../../constants/styles";
+import { useAtom } from "jotai";
+import { manageExpenseOpenedAtom } from "../../state/atoms";
 
 interface ExpensesOutputProps extends BaseProps {
   expensesPeriod: string;
@@ -12,8 +14,10 @@ interface ExpensesOutputProps extends BaseProps {
 }
 
 export default function ExpensesOutput(props: ExpensesOutputProps) {
+  const [manageExpenseOpened] = useAtom(manageExpenseOpenedAtom);
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, manageExpenseOpened && styles.backdrop]}>
       <ExpensesSummary
         expenses={MOCK_EXPENSES}
         periodName={props.expensesPeriod}
@@ -28,5 +32,8 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     backgroundColor: globalStyles.colors.primary700,
+  },
+  backdrop: {
+    opacity: 0.5,
   },
 });
