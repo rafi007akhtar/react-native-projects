@@ -34,7 +34,7 @@ export const MOCK_EXPENSES: Expenses = [
   {
     id: "e6",
     amount: 66,
-    description: "Four fimly figurines",
+    description: "Four filmy figurines",
     date: new Date("2024-06-01"),
   },
   {
