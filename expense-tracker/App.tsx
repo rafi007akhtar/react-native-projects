@@ -9,6 +9,7 @@ import { Text } from "react-native";
 import { useFonts } from "expo-font";
 import { globalStyles } from "./constants/styles";
 import { MaterialIcons } from "@expo/vector-icons";
+import IconButton from "./components/UI/IconButton";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -22,6 +23,8 @@ function ExpenseOverview() {
           alignItems: "center",
           justifyContent: "center",
           marginBottom: 10,
+          fontSize: 13,
+          letterSpacing: 0.1,
         },
         headerTitleStyle: {
           fontFamily: globalStyles.fonts.SANS_REGULAR,
@@ -37,6 +40,13 @@ function ExpenseOverview() {
         },
         tabBarActiveTintColor: globalStyles.colors.accent500,
         tabBarInactiveTintColor: globalStyles.colors.primary100,
+        headerRight: (props) => (
+          <IconButton
+            name="add-circle-outline"
+            color={props.tintColor}
+            size={24}
+          />
+        ),
       }}
     >
       <Tab.Screen
