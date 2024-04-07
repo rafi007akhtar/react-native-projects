@@ -1,12 +1,18 @@
-import { ExpenseDetails } from "../../models/expenses.model";
+import { Expense } from "../../models/expenses.model";
 import { Pressable, StyleSheet, View } from "react-native";
 import ET from "./ET";
 import { globalStyles } from "../../constants/styles";
 import { iShadow } from "../../utils/styles.utl";
 import { formatDate } from "../../utils/dates.util";
+import { useNavigation } from "@react-navigation/native";
 
-export default function ExpenseItem(props: ExpenseDetails) {
-  const { description, amount, date } = props;
+export default function ExpenseItem(props: Expense) {
+  const navigation = useNavigation<any>();
+  const { description, amount, date, id } = props;
+
+  function pressHandler() {
+    navigation.navigate("ManageExpense", { id });
+  }
 
   return (
     <View style={styles.itemContainer}>
@@ -16,6 +22,7 @@ export default function ExpenseItem(props: ExpenseDetails) {
           styles.pressable,
           isPressed.pressed && styles.pressed,
         ]}
+        onPress={pressHandler}
       >
         <View>
           <ET style={[styles.commonText, styles.description]} isBold={true}>
