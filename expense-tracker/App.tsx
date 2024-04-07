@@ -10,11 +10,19 @@ import { useFonts } from "expo-font";
 import { globalStyles } from "./constants/styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import IconButton from "./components/UI/IconButton";
+import { useAtom } from "jotai";
+import { manageExpenseOpenedAtom } from "./state/atoms";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function ExpenseOverview() {
+function ExpenseOverview(props: any) {
+  const [manageExpenseOpened] = useAtom(manageExpenseOpenedAtom);
+
+  function addHandler() {
+    props.navigation.navigate("ManageExpense"); // alternatively, use navigation obj inside screenOptions passed through an inline func.
+  }
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -32,6 +40,7 @@ function ExpenseOverview() {
         headerTitleAlign: "center",
         headerStyle: {
           backgroundColor: globalStyles.colors.primary500,
+          opacity: manageExpenseOpened ? 0.75 : 1,
         },
         headerTintColor: "white",
         tabBarStyle: {
@@ -45,6 +54,7 @@ function ExpenseOverview() {
             name="add-circle-outline"
             color={props.tintColor}
             size={24}
+            onPress={addHandler}
           />
         ),
       }}
@@ -92,7 +102,14 @@ export default function App() {
   if (fontsLoaded) {
     screen = (
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: globalStyles.colors.primary500,
+            },
+            headerTintColor: "white",
+          }}
+        >
           <Stack.Screen
             name="ExpenseOverview"
             component={ExpenseOverview}
@@ -100,7 +117,25 @@ export default function App() {
               headerShown: false,
             }}
           />
-          <Stack.Screen name="ManageExpense" component={ManageExpense} />
+          <Stack.Screen
+            name="ManageExpense"
+            component={ManageExpense}
+            options={{
+              presentation: "transparentModal",
+              headerStyle: {
+                backgroundColor: globalStyles.colors.primary450,
+                height: 40,
+              },
+              headerTitleAlign: "center",
+              headerTitleStyle: {
+                fontFamily: globalStyles.fonts.SANS_REGULAR,
+                fontSize: 16,
+              },
+              cardStyle: {
+                marginTop: "10%",
+              },
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );
