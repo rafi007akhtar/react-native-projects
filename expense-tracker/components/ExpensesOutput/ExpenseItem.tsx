@@ -9,8 +9,14 @@ export default function ExpenseItem(props: ExpenseDetails) {
   const { description, amount, date } = props;
 
   return (
-    <Pressable>
-      <View style={styles.itemContainer}>
+    <View style={styles.itemContainer}>
+      <Pressable
+        android_ripple={{ color: "#78b8cec7" }}
+        style={(isPressed) => [
+          styles.pressable,
+          isPressed.pressed && styles.pressed,
+        ]}
+      >
         <View>
           <ET style={[styles.commonText, styles.description]} isBold={true}>
             {description}
@@ -22,21 +28,28 @@ export default function ExpenseItem(props: ExpenseDetails) {
             ₹ {amount.toFixed(2)}
           </ET>
         </View>
-      </View>
-    </Pressable>
+      </Pressable>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   itemContainer: {
+    overflow: "hidden",
     marginVertical: 8,
     backgroundColor: globalStyles.colors.primary500,
-    padding: 12,
-    flexDirection: "row",
-    justifyContent: "space-between",
     borderRadius: 6,
     elevation: 3,
     ...iShadow(globalStyles.colors.gray500, [1, 1], 0.4, 4),
+    flex: 1,
+  },
+  pressable: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+    padding: 12,
+  },
+  pressed: {
+    opacity: 0.9,
   },
   commonText: {
     color: globalStyles.colors.primary50,
