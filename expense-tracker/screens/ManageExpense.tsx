@@ -6,11 +6,18 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import IconButton from "../components/UI/IconButton";
 import { globalStyles } from "../constants/styles";
 import Button from "../components/UI/Button";
+import useStore from "../state/stores";
 
 export default function ManageExpense() {
   const [_manageExpenseOpened, setManageExpenseOpened] = useAtom(
     manageExpenseOpenedAtom
   );
+  const [expenseDeleter, expenseUpdator, expenseAdder] = useStore((state) => [
+    state.deleteExpense,
+    state.updateExpense,
+    state.addExpense,
+  ]);
+
   const route = useRoute();
   const navigation = useNavigation();
 
@@ -31,6 +38,7 @@ export default function ManageExpense() {
   }, []);
 
   function deleteExpenseHandler() {
+    expenseDeleter(id);
     navigation.goBack();
   }
 
@@ -39,6 +47,15 @@ export default function ManageExpense() {
   }
 
   function confirmHandler() {
+    if (isEditing) {
+      expenseUpdator(id, {
+        amount: 10,
+        date: new Date(),
+        description: "Edit Test",
+      });
+    } else {
+      expenseAdder({ amount: 10, date: new Date(), description: "Add Test" });
+    }
     navigation.goBack();
   }
 
