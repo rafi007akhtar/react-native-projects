@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import ExpensesSummary from "./ExpensesSummary";
 import { BaseProps } from "../../models/base.model";
 import { Expenses } from "../../models/expenses.model";
@@ -15,13 +15,21 @@ interface ExpensesOutputProps extends BaseProps {
 export default function ExpensesOutput(props: ExpensesOutputProps) {
   const [manageExpenseOpened] = useAtom(manageExpenseOpenedAtom);
 
+  const areExpensesShown = props.expenses.length;
+
   return (
     <View style={[styles.container, manageExpenseOpened && styles.backdrop]}>
       <ExpensesSummary
         expenses={props.expenses}
         periodName={props.expensesPeriod}
       />
-      <ExpensesList expenses={props.expenses} />
+      {areExpensesShown ? (
+        <ExpensesList expenses={props.expenses} />
+      ) : (
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>No expense added yet.</Text>
+        </View>
+      )}
     </View>
   );
 }
@@ -34,5 +42,12 @@ const styles = StyleSheet.create({
   },
   backdrop: {
     opacity: 0.5,
+  },
+  textContainer: {
+    marginTop: 12,
+    alignItems: "center",
+  },
+  text: {
+    color: globalStyles.colors.primary50,
   },
 });
