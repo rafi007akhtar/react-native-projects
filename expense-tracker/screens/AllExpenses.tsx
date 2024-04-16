@@ -1,5 +1,7 @@
 import ExpensesOutput from "../components/ExpensesOutput/ExpensesOutput";
+import useStore from "../state/stores";
 
 export default function AllExpenses() {
-  return <ExpensesOutput expensesPeriod="Total" />;
+  const expenses = useStore((state) => state.expenses);
+  return <ExpensesOutput expensesPeriod="Total" expenses={expenses} />;
 }

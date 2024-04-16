@@ -3,7 +3,6 @@ import ExpensesSummary from "./ExpensesSummary";
 import { BaseProps } from "../../models/base.model";
 import { Expenses } from "../../models/expenses.model";
 import ExpensesList from "./ExpensesList";
-import { MOCK_EXPENSES } from "../../constants/mockData";
 import { globalStyles } from "../../constants/styles";
 import { useAtom } from "jotai";
 import { manageExpenseOpenedAtom } from "../../state/atoms";
@@ -19,10 +18,10 @@ export default function ExpensesOutput(props: ExpensesOutputProps) {
   return (
     <View style={[styles.container, manageExpenseOpened && styles.backdrop]}>
       <ExpensesSummary
-        expenses={MOCK_EXPENSES}
+        expenses={props.expenses}
         periodName={props.expensesPeriod}
       />
-      <ExpensesList expenses={MOCK_EXPENSES} />
+      <ExpensesList expenses={props.expenses} />
     </View>
   );
 }
