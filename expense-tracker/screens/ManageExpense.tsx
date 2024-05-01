@@ -7,6 +7,7 @@ import IconButton from "../components/UI/IconButton";
 import { globalStyles } from "../constants/styles";
 import Button from "../components/UI/Button";
 import useStore from "../state/stores";
+import ExpenseForm from "../components/ExpenseForm/ExpenseForm";
 
 export default function ManageExpense() {
   const [_manageExpenseOpened, setManageExpenseOpened] = useAtom(
@@ -61,6 +62,7 @@ export default function ManageExpense() {
 
   return (
     <View style={styles.container}>
+      <ExpenseForm />
       <View style={styles.buttons}>
         <Button mode="flat" onPress={cancelHandler} style={styles.button}>
           Cancel
