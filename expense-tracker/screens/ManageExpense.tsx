@@ -8,6 +8,7 @@ import { globalStyles } from "../constants/styles";
 import useStore from "../state/stores";
 import ExpenseForm from "../components/ExpenseForm/ExpenseForm";
 import { ExpenseDetails } from "../models/expenses.model";
+import httpUtils from "../utils/http.utils";
 
 export default function ManageExpense() {
   const [_manageExpenseOpened, setManageExpenseOpened] = useAtom(
@@ -56,6 +57,7 @@ export default function ManageExpense() {
     if (isEditing) {
       expenseUpdator(id, expenseData);
     } else {
+      httpUtils.addExpense(expenseData);
       expenseAdder(expenseData);
     }
     navigation.goBack();
