@@ -7,8 +7,10 @@ const EXPENSES_PATH = "expenses.json";
 const expenseURL = `${BACKEND_BASE_URL}/${EXPENSES_PATH}`;
 
 const httpUtils = {
-  addExpense: (expenseDetails: ExpenseDetails) => {
-    axios.post(expenseURL, expenseDetails);
+  addExpense: async (expenseDetails: ExpenseDetails) => {
+    const response = await axios.post(expenseURL, expenseDetails);
+    const id = response.data?.name;
+    return id;
   },
 
   fetchExpenses: async () => {
@@ -29,6 +31,15 @@ const httpUtils = {
     }
 
     return [expenses, error];
+  },
+
+  updateExpense: async (id: string, expenseDetails: ExpenseDetails) => {
+    const updateExpURL = `${BACKEND_BASE_URL}/expenses/${id}.json`;
+    return await axios.put(updateExpURL, expenseDetails);
+  },
+
+  deleteExpense: async (id: string) => {
+    return await axios.delete(`${BACKEND_BASE_URL}/expenses/${id}.json`);
   },
 };
 
