@@ -10,7 +10,7 @@ import { globalStyles } from "./constants/styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import IconButton from "./components/UI/IconButton";
 import { useAtom } from "jotai";
-import { manageExpenseOpenedAtom, waitingStateAtom } from "./state/atoms";
+import { manageExpenseOpenedAtom } from "./state/atoms";
 import Spinner from "./components/UI/Spinner";
 
 const Stack = createStackNavigator();
@@ -96,11 +96,10 @@ export default function App() {
     "product-sans": require("./assets/fonts/Product-Sans-Regular.ttf"),
     "product-sans-bold": require("./assets/fonts/Product-Sans-Bold.ttf"),
   });
-  const [waitingState] = useAtom(waitingStateAtom);
 
   let screen: React.JSX.Element;
 
-  if (fontsLoaded && !waitingState) {
+  if (fontsLoaded) {
     screen = (
       <NavigationContainer>
         <Stack.Navigator

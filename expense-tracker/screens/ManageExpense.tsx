@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
-import { StyleSheet, Text, View } from "react-native";
-import { manageExpenseOpenedAtom, waitingStateAtom } from "../state/atoms";
+import { StyleSheet, View } from "react-native";
+import { manageExpenseOpenedAtom } from "../state/atoms";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import IconButton from "../components/UI/IconButton";
