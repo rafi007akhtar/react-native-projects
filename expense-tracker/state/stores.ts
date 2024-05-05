@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { Expense, ExpenseDetails, Expenses } from "../models/expenses.model";
-import { MOCK_EXPENSES } from "../constants/mockData";
 
 export interface State {
   expenses: Expenses;
@@ -8,7 +7,7 @@ export interface State {
 
 export interface Action {
   setExpenses: (expenses: Expenses) => void;
-  addExpense: (newExp: ExpenseDetails) => void;
+  addExpense: (newExp: Expense) => void;
   deleteExpense: (id: string) => void;
   updateExpense: (id: string, newExpData: ExpenseDetails) => void;
 }
@@ -19,14 +18,17 @@ const useStore = create<State & Action>((set, get) => ({
 
   // actions go here (set, add, delete, update)
   setExpenses: (expenses: Expenses) => {
-    set((state) => {
-      return { expenses };
+    set(() => {
+      return { expenses: expenses.reverse() };
     });
   },
 
-  addExpense: (expData: ExpenseDetails) => {
+  addExpense: (expData: Expense) => {
+    if (!expData.id) {
+      expData.id = "" + Math.random();
+    }
     set((state: State) => {
-      const newExp = { ...expData, id: "" + Math.random() };
+      const newExp = { ...expData };
       return {
         expenses: [...state.expenses, newExp],
       };
