@@ -1,18 +1,22 @@
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ExpensesOutput from "../components/ExpensesOutput/ExpensesOutput";
 import useStore from "../state/stores";
 import { getDateMinusDays } from "../utils/dates.util";
 import httpUtils from "../utils/http.utils";
+import Spinner from "../components/UI/Spinner";
 
 export default function RecentExpenses() {
   const [expenses, setExpenses] = useStore((state) => [
     state.expenses,
     state.setExpenses,
   ]);
+  const [localWaitingState, setLocalWaitingState] = useState(false);
 
   useEffect(() => {
     async function obtainExpenses() {
+      setLocalWaitingState(true);
       const [expenses, err] = await httpUtils.fetchExpenses();
+      setLocalWaitingState(false);
       if (err) {
         console.error(err);
         return;
@@ -30,7 +34,14 @@ export default function RecentExpenses() {
     (expense) => expense.date > dateLastWeek
   );
 
-  return (
-    <ExpensesOutput expensesPeriod="Last 7 Days" expenses={recentExpenses} />
-  );
+  let screen: React.JSX.Element;
+  if (localWaitingState) {
+    screen = <Spinner />;
+  } else {
+    screen = (
+      <ExpensesOutput expensesPeriod="Last 7 Days" expenses={recentExpenses} />
+    );
+  }
+
+  return screen;
 }
