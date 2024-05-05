@@ -7,6 +7,7 @@ export interface State {
 }
 
 export interface Action {
+  setExpenses: (expenses: Expenses) => void;
   addExpense: (newExp: ExpenseDetails) => void;
   deleteExpense: (id: string) => void;
   updateExpense: (id: string, newExpData: ExpenseDetails) => void;
@@ -14,9 +15,15 @@ export interface Action {
 
 const useStore = create<State & Action>((set, get) => ({
   // state part goes here
-  expenses: MOCK_EXPENSES,
+  expenses: [],
 
-  // actions go here (add, delete, update)
+  // actions go here (set, add, delete, update)
+  setExpenses: (expenses: Expenses) => {
+    set((state) => {
+      return { expenses };
+    });
+  },
+
   addExpense: (expData: ExpenseDetails) => {
     set((state: State) => {
       const newExp = { ...expData, id: "" + Math.random() };
