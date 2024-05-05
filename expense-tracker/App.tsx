@@ -5,13 +5,13 @@ import ManageExpense from "./screens/ManageExpense";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Text } from "react-native";
 import { useFonts } from "expo-font";
 import { globalStyles } from "./constants/styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import IconButton from "./components/UI/IconButton";
 import { useAtom } from "jotai";
-import { manageExpenseOpenedAtom } from "./state/atoms";
+import { manageExpenseOpenedAtom, waitingStateAtom } from "./state/atoms";
+import Spinner from "./components/UI/Spinner";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -96,10 +96,11 @@ export default function App() {
     "product-sans": require("./assets/fonts/Product-Sans-Regular.ttf"),
     "product-sans-bold": require("./assets/fonts/Product-Sans-Bold.ttf"),
   });
+  const [waitingState] = useAtom(waitingStateAtom);
 
-  let screen = <Text>Loading ...</Text>;
+  let screen: React.JSX.Element;
 
-  if (fontsLoaded) {
+  if (fontsLoaded && !waitingState) {
     screen = (
       <NavigationContainer>
         <Stack.Navigator
@@ -139,6 +140,8 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     );
+  } else {
+    screen = <Spinner />;
   }
 
   return screen;
