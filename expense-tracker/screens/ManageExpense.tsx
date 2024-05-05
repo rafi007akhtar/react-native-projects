@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { StyleSheet, View } from "react-native";
-import { manageExpenseOpenedAtom } from "../state/atoms";
+import { manageExpenseOpenedAtom, waitingStateAtom } from "../state/atoms";
 import { useEffect, useLayoutEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import IconButton from "../components/UI/IconButton";
@@ -14,6 +14,7 @@ export default function ManageExpense() {
   const [_manageExpenseOpened, setManageExpenseOpened] = useAtom(
     manageExpenseOpenedAtom
   );
+  const [_waitingState, setWaitingState] = useAtom(waitingStateAtom);
   const [expenseDeleter, expenseUpdator, expenseAdder, allExpenses] = useStore(
     (state) => [
       state.deleteExpense,
@@ -44,8 +45,11 @@ export default function ManageExpense() {
     };
   }, []);
 
-  function deleteExpenseHandler() {
+  async function deleteExpenseHandler() {
     expenseDeleter(id);
+    setWaitingState(true);
+    await httpUtils.deleteExpense(id);
+    setWaitingState(false);
     navigation.goBack();
   }
 
@@ -53,12 +57,17 @@ export default function ManageExpense() {
     navigation.goBack();
   }
 
-  function confirmHandler(expenseData: ExpenseDetails) {
+  async function confirmHandler(expenseData: ExpenseDetails) {
     if (isEditing) {
       expenseUpdator(id, expenseData);
+      setWaitingState(true);
+      await httpUtils.updateExpense(id, expenseData);
+      setWaitingState(false);
     } else {
-      httpUtils.addExpense(expenseData);
-      expenseAdder(expenseData);
+      setWaitingState(true);
+      const id = await httpUtils.addExpense(expenseData);
+      setWaitingState(false);
+      expenseAdder({ ...expenseData, id });
     }
     navigation.goBack();
   }
