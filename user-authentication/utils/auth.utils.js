@@ -13,7 +13,6 @@ async function authenticate(email, password, mode) {
       password,
       returnSecureToken: true,
     });
-    console.log({ response });
   } catch (e) {
     error = e;
   }

@@ -16,7 +16,6 @@ function LoginScreen() {
     const [response, error] = await loginUser(email, password);
     setIsAuthenticating(false);
 
-    console.log([response, error]);
     if (error) {
       Alert.alert("Something went wrong.", "Please check user id / password.");
       return;
