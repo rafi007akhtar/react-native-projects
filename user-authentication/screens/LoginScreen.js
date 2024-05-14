@@ -3,9 +3,11 @@ import AuthContent from "../components/Auth/AuthContent";
 import { loginUser } from "../utils/auth.utils";
 import LoadingOverlay from "../components/ui/LoadingOverlay";
 import { Alert } from "react-native";
+import useAuthStore from "../state/stores";
 
 function LoginScreen() {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [authenticate] = useAuthStore((state) => [state.authenticate]);
 
   async function loginHandler(credentials) {
     const { email, password } = credentials;
@@ -17,7 +19,11 @@ function LoginScreen() {
     console.log([response, error]);
     if (error) {
       Alert.alert("Something went wrong.", "Please check user id / password.");
+      return;
     }
+
+    const token = response?.data?.idToken;
+    authenticate(token);
   }
 
   if (isAuthenticating) {
