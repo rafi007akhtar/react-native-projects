@@ -17,7 +17,9 @@ function AuthContent({ isLogin, onAuthenticate }) {
   });
 
   function switchAuthModeHandler() {
-    isLogin ? navigation.navigate("Signup") : navigation.navigate("Login");
+    isLogin
+      ? navigation.navigate("Signup") // alternatively: navigate.replace, but that won't have back button
+      : navigation.navigate("Login");
   }
 
   function submitHandler(credentials) {
