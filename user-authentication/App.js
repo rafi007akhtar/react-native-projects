@@ -1,11 +1,12 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StatusBar } from 'expo-status-bar';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { StatusBar } from "expo-status-bar";
 
-import LoginScreen from './screens/LoginScreen';
-import SignupScreen from './screens/SignupScreen';
-import WelcomeScreen from './screens/WelcomeScreen';
-import { Colors } from './constants/styles';
+import LoginScreen from "./screens/LoginScreen";
+import SignupScreen from "./screens/SignupScreen";
+import WelcomeScreen from "./screens/WelcomeScreen";
+import { Colors } from "./constants/styles";
+import useAuthStore from "./state/stores";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +15,7 @@ function AuthStack() {
     <Stack.Navigator
       screenOptions={{
         headerStyle: { backgroundColor: Colors.primary500 },
-        headerTintColor: 'white',
+        headerTintColor: "white",
         contentStyle: { backgroundColor: Colors.primary100 },
       }}
     >
@@ -29,7 +30,7 @@ function AuthenticatedStack() {
     <Stack.Navigator
       screenOptions={{
         headerStyle: { backgroundColor: Colors.primary500 },
-        headerTintColor: 'white',
+        headerTintColor: "white",
         contentStyle: { backgroundColor: Colors.primary100 },
       }}
     >
@@ -39,11 +40,10 @@ function AuthenticatedStack() {
 }
 
 function Navigation() {
-  return (
-    <NavigationContainer>
-      <AuthStack />
-    </NavigationContainer>
-  );
+  const [isAuthenticated] = useAuthStore((state) => [state.isAuthenticated]);
+  const screen = isAuthenticated ? <AuthenticatedStack /> : <AuthStack />;
+
+  return <NavigationContainer>{screen}</NavigationContainer>;
 }
 
 export default function App() {
