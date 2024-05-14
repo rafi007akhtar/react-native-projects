@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 
 const useAuthStore = create((set) => ({
@@ -10,6 +11,7 @@ const useAuthStore = create((set) => ({
     set(() => {
       return { token: authToken, isAuthenticated: true };
     });
+    AsyncStorage.setItem("token", authToken);
   },
   logout() {
     set(() => {

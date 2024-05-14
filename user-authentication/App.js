@@ -8,6 +8,9 @@ import WelcomeScreen from "./screens/WelcomeScreen";
 import { Colors } from "./constants/styles";
 import useAuthStore from "./state/stores";
 import IconButton from "./components/ui/IconButton";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
+import LoadingOverlay from "./components/ui/LoadingOverlay";
 
 const Stack = createNativeStackNavigator();
 
@@ -63,11 +66,32 @@ function Navigation() {
 }
 
 export default function App() {
+  const [authenticate] = useAuthStore((state) => [state.authenticate]);
+  const [fetchingToken, setFetchingToken] = useState(false);
+
+  useEffect(() => {
+    async function lastSessionAction() {
+      setFetchingToken(true);
+      const token = await AsyncStorage.getItem("token");
+      setFetchingToken(false);
+      if (token) {
+        authenticate(token);
+      }
+    }
+    lastSessionAction();
+  }, []);
+
+  const screen = fetchingToken ? (
+    <LoadingOverlay message="Loading ..." />
+  ) : (
+    <Navigation />
+  );
+
   return (
     <>
       <StatusBar style="light" />
 
-      <Navigation />
+      {screen}
     </>
   );
 }
