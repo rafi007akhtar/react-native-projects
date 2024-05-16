@@ -7,13 +7,15 @@ import {
   getCurrentPositionAsync,
   useForegroundPermissions,
 } from "expo-location";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getMapURL } from "../../utils/maps.utils";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 export default function LocationPicker() {
+  const navigation = useNavigation();
+  const route = useRoute();
   const [pickedLocation, setPickedLocation] = useState<LocationObject>();
   const [locPermission, requestPermission] = useForegroundPermissions();
-  console.log({ locPermission });
 
   async function verifyPermission() {
     let permissionReps;
@@ -43,7 +45,17 @@ export default function LocationPicker() {
     console.log({ location });
   }
 
-  function selectOnMap() {}
+  const coords = route?.params;
+
+  useEffect(() => {
+    if (coords) {
+      setPickedLocation({ coords } as LocationObject);
+    }
+  }, [coords]);
+
+  function selectOnMap() {
+    navigation.navigate("Map" as never);
+  }
 
   let mapPreview = <Text>Map Preview goes here.</Text>;
 
