@@ -13,3 +13,8 @@ export interface PlaceProps extends BaseProps {
   place: Place;
   onClick?: () => void;
 }
+
+export interface OutlinedButtonProps extends BaseProps {
+  onPress: () => void;
+  icon: string | any;
+}
