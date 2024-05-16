@@ -29,6 +29,12 @@
         {
           "cameraPermission": "Camera permission needed for taking photos of your favorite places."
         }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        }
       ]
     ]
   }
