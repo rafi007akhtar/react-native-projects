@@ -73,6 +73,9 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     alignItems: "center",
     justifyContent: "center",
+    borderRadius: 4,
+    overflow: "hidden",
+    height: 200,
   },
   image: {
     width: "100%",
