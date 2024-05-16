@@ -7,6 +7,7 @@ import AddPlace from "./screens/AddPlace";
 import { useFonts } from "expo-font";
 import IconButton from "./components/UI/IconButton";
 import { COLORS } from "./constants/colors";
+import Map from "./screens/Map";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +18,7 @@ export default function App() {
   });
 
   let screen = (
-    <View>
+    <View style={styles.loadingContainer}>
       <Text>Loading ...</Text>
     </View>
   );
@@ -63,6 +64,7 @@ export default function App() {
                 headerTitle: "Add Place",
               }}
             />
+            <Stack.Screen name="Map" component={Map} />
           </Stack.Navigator>
         </NavigationContainer>
       </>
@@ -78,5 +80,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  loadingContainer: {
+    flex: 1,
   },
 });
