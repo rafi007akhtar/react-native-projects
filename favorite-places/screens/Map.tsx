@@ -1,30 +1,26 @@
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect } from "react";
 import { Alert, StyleSheet } from "react-native";
-import MapView, {
-  Region,
-  Marker,
-  MapPressEvent,
-  LatLng,
-} from "react-native-maps";
+import MapView, { Region, Marker, MapPressEvent } from "react-native-maps";
 import IconButton from "../components/UI/IconButton";
+import { useAtom } from "jotai";
+import { selectedLocationAtom } from "../state/atoms";
 
 export default function Map(props: { navigation: any }) {
-  const [selectedCoord, setSelectedCoord] = useState<LatLng>();
+  const [selectedLocation, setSelectedLocation] = useAtom(selectedLocationAtom);
 
   const region: Region = {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
-    latitude: 37.78, // TODO: this is hard coded; change this later
-    longitude: -122.43, // TODO: this is hard coded; change this later
+    ...selectedLocation,
   };
 
   function mapPressHandler(evt: MapPressEvent) {
     const { latitude, longitude } = evt.nativeEvent.coordinate;
-    setSelectedCoord({ latitude, longitude });
+    setSelectedLocation({ latitude, longitude });
   }
 
   function saveSelectedCoordHandler() {
-    if (!selectedCoord) {
+    if (!selectedLocation.latitude) {
       Alert.alert(
         "Unable to save coordinates",
         "Please select a point in the map before trying to save it."
@@ -32,7 +28,7 @@ export default function Map(props: { navigation: any }) {
       return;
     }
 
-    props.navigation.navigate("AddPlace", selectedCoord);
+    props.navigation.navigate("AddPlace");
   }
   useLayoutEffect(() => {
     props.navigation.setOptions({
@@ -45,7 +41,7 @@ export default function Map(props: { navigation: any }) {
         />
       ),
     });
-  }, [props.navigation, selectedCoord]);
+  }, [props.navigation, selectedLocation]);
 
   return (
     <MapView
@@ -53,8 +49,8 @@ export default function Map(props: { navigation: any }) {
       style={styles.map}
       onPress={mapPressHandler}
     >
-      {selectedCoord && (
-        <Marker coordinate={selectedCoord} title="Picked Location" />
+      {selectedLocation && (
+        <Marker coordinate={selectedLocation} title="Picked Location" />
       )}
     </MapView>
   );

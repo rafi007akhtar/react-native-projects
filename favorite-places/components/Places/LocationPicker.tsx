@@ -2,19 +2,18 @@ import { Alert, Image, StyleSheet, Text, View } from "react-native";
 import OutlinedButton from "../UI/OutlinedButton";
 import { COLORS } from "../../constants/colors";
 import {
-  LocationObject,
   PermissionStatus,
   getCurrentPositionAsync,
   useForegroundPermissions,
 } from "expo-location";
-import { useEffect, useState } from "react";
 import { getMapURL } from "../../utils/maps.utils";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import { useAtom } from "jotai";
+import { selectedLocationAtom } from "../../state/atoms";
 
 export default function LocationPicker() {
   const navigation = useNavigation();
-  const route = useRoute();
-  const [pickedLocation, setPickedLocation] = useState<LocationObject>();
+  const [selectedLocation, setSelectedLocation] = useAtom(selectedLocationAtom);
   const [locPermission, requestPermission] = useForegroundPermissions();
 
   async function verifyPermission() {
@@ -39,19 +38,12 @@ export default function LocationPicker() {
     if (!hasLocationPermission) {
       return;
     }
-
+    console.log("has permission");
     const location = await getCurrentPositionAsync();
-    setPickedLocation(location);
     console.log({ location });
+    const { latitude, longitude } = location.coords;
+    setSelectedLocation({ latitude, longitude });
   }
-
-  const coords = route?.params;
-
-  useEffect(() => {
-    if (coords) {
-      setPickedLocation({ coords } as LocationObject);
-    }
-  }, [coords]);
 
   function selectOnMap() {
     navigation.navigate("Map" as never);
@@ -59,14 +51,14 @@ export default function LocationPicker() {
 
   let mapPreview = <Text>Map Preview goes here.</Text>;
 
-  if (pickedLocation) {
+  if (selectedLocation?.latitude) {
     mapPreview = (
       <Image
         style={styles.mapPreviewImage}
         source={{
           uri: getMapURL(
-            pickedLocation.coords.latitude.toString(),
-            pickedLocation.coords.longitude.toString()
+            selectedLocation.latitude.toString(),
+            selectedLocation.longitude.toString()
           ),
         }}
       />
