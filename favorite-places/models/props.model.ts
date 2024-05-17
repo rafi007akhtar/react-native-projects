@@ -18,3 +18,7 @@ export interface OutlinedButtonProps extends BaseProps {
   onPress?: () => void;
   icon: string | any;
 }
+
+export interface BtnProps extends BaseProps {
+  onPress?: () => void;
+}
