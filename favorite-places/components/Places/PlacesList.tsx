@@ -16,6 +16,7 @@ export default function PlacesList(props: PlacesListProps) {
 
   return (
     <FlatList
+      style={styles.list}
       data={props.places}
       keyExtractor={(place) => place.id}
       renderItem={(placeContainer) => <PlaceItem place={placeContainer.item} />}
@@ -33,5 +34,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "product-sans",
     color: COLORS.primary200,
+  },
+  list: {
+    margin: 24,
   },
 });
