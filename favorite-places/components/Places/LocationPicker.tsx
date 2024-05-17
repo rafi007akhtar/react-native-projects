@@ -38,9 +38,7 @@ export default function LocationPicker() {
     if (!hasLocationPermission) {
       return;
     }
-    console.log("has permission");
     const location = await getCurrentPositionAsync();
-    console.log({ location });
     const { latitude, longitude } = location.coords;
     setSelectedLocation({ latitude, longitude });
   }

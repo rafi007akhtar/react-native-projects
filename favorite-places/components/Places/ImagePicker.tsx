@@ -4,13 +4,14 @@ import {
   useCameraPermissions,
   PermissionStatus,
 } from "expo-image-picker";
-import { useState } from "react";
 import { COLORS } from "../../constants/colors";
 import OutlinedButton from "../UI/OutlinedButton";
+import { useAtom } from "jotai";
+import { selectedImageAtom } from "../../state/atoms";
 
 export default function ImagePicker() {
   const [cameraPermission, requestPermission] = useCameraPermissions();
-  const [imagePickedUri, setImagePickedUri] = useState<string>();
+  const [selectedImageUri, setselectedImageUri] = useAtom(selectedImageAtom);
 
   async function verifyPermission() {
     if (cameraPermission?.status === PermissionStatus.UNDETERMINED) {
@@ -44,7 +45,7 @@ export default function ImagePicker() {
 
     if (image?.assets?.length) {
       const uri = image.assets[0].uri;
-      setImagePickedUri(uri);
+      setselectedImageUri(uri);
     }
   }
 
@@ -52,10 +53,12 @@ export default function ImagePicker() {
     <Text style={styles.imagePlaceholder}>No image selected yet.</Text>
   );
 
-  if (imagePickedUri) {
+  if (selectedImageUri) {
     imageViewer = (
-      <Image source={{ uri: imagePickedUri }} style={styles.image} />
+      <Image source={{ uri: selectedImageUri }} style={styles.image} />
     );
+  } else {
+    setselectedImageUri("");
   }
 
   return (
