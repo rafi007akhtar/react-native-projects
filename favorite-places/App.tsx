@@ -8,6 +8,8 @@ import { useFonts } from "expo-font";
 import IconButton from "./components/UI/IconButton";
 import { COLORS } from "./constants/colors";
 import Map from "./screens/Map";
+import { useEffect } from "react";
+import { initDB } from "./utils/db.utils";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +18,13 @@ export default function App() {
     "product-sans": require("./assets/fonts/Product-Sans-Regular.ttf"),
     "product-sans-bold": require("./assets/fonts/Product-Sans-Bold.ttf"),
   });
+
+  useEffect(() => {
+    initDB().then((db) => {
+      const [result, err] = db;
+      console.log({ result, err });
+    });
+  }, []);
 
   let screen = (
     <View style={styles.loadingContainer}>
@@ -83,5 +92,7 @@ const styles = StyleSheet.create({
   },
   loadingContainer: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
