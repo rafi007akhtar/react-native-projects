@@ -11,7 +11,6 @@ export function getMapURL(lat: string, lng: string) {
   const mapURL = GOOGLE_MAPS_BASE_URL.replaceAll("#LAT", lat)
     .replaceAll("#LNG", lng)
     .replace("#API_KEY", privateConstants.GOOGLE_MAPS_API_KEY);
-  console.log({ mapURL });
   return mapURL;
 }
 
@@ -22,7 +21,6 @@ export async function getAddress(
   const revGeocodURL = GOOGLE_MAPS_GEOCODING_URL.replace("#LAT", lat)
     .replace("#LNG", lng)
     .replace("#API_KEY", privateConstants.GOOGLE_MAPS_API_KEY);
-  console.log({ revGeocodURL });
 
   let address, error;
   try {
