@@ -9,7 +9,7 @@ import IconButton from "./components/UI/IconButton";
 import { COLORS } from "./constants/colors";
 import Map from "./screens/Map";
 import { useEffect } from "react";
-import { initDB } from "./utils/db.utils";
+import { closeDB, initDB, isDBOpen } from "./utils/db.utils";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +24,12 @@ export default function App() {
       const [result, err] = db;
       console.log({ result, err });
     });
+
+    return () => {
+      if (isDBOpen) {
+        closeDB();
+      }
+    };
   }, []);
 
   let screen = (
