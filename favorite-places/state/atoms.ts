@@ -1,7 +1,7 @@
 import { atom } from "jotai";
 import { Places } from "../models/place.model";
 
-interface SelectedLocation {
+export interface SelectedLocation {
   latitude: number;
   longitude: number;
 }
