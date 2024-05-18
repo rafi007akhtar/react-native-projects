@@ -13,6 +13,7 @@ import { closeDB, getAllPlaces, initDB, isDBOpen } from "./utils/db.utils";
 import { Places } from "./models/place.model";
 import { useAtom } from "jotai";
 import { placesAtom } from "./state/atoms";
+import PlacesDetails from "./screens/PlaceDetails";
 
 const Stack = createNativeStackNavigator();
 
@@ -98,6 +99,13 @@ export default function App() {
               }}
             />
             <Stack.Screen name="Map" component={Map} />
+            <Stack.Screen
+              name="PlacesDetails"
+              component={PlacesDetails}
+              options={{
+                headerTitle: "Place Details",
+              }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </>
