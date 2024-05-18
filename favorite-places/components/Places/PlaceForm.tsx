@@ -23,6 +23,7 @@ import { useNavigation } from "@react-navigation/native";
 import { getAddress } from "../../utils/maps.utils";
 import { Place } from "../../models/place.model";
 import { generateUniqueId } from "../../utils/common.utils";
+import { insertPlace } from "../../utils/db.utils";
 
 export default function PlaceForm() {
   const [enteredTitle, setEnteredTitle] = useAtom(titleAtom);
@@ -63,6 +64,8 @@ export default function PlaceForm() {
         title: enteredTitle,
       };
       setPlaces((currPlaces) => [...currPlaces, place]);
+      const [insertResult, insertErr] = await insertPlace(place);
+      console.log({ insertResult, insertErr });
 
       // reset entered vals
       setEnteredTitle("");
