@@ -21,6 +21,7 @@ export default function ImagePicker() {
     }
 
     if (cameraPermission?.status === PermissionStatus.DENIED) {
+      await requestPermission();
       Alert.alert(
         "Insufficient permissions",
         "Camera permission is needed for taking picture."
