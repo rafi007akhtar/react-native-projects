@@ -7,15 +7,18 @@ import { useLayoutEffect } from "react";
 export default function PlacesDetails(props: any) {
   const params = props?.route?.params;
   const place: Place = params?.place;
+  const navigation = props?.navigation;
 
   useLayoutEffect(() => {
-    const navigation = props?.navigation;
     navigation?.setOptions({
       headerTitle: place.title,
     });
   }, [place.title]);
 
-  function showOnMapHandler() {}
+  function showOnMapHandler() {
+    const { location } = place;
+    navigation.navigate("Map", { location });
+  }
 
   return (
     <ScrollView>
