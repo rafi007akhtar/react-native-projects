@@ -26,8 +26,7 @@ export async function initDB() {
 
 export async function insertPlace(place: Place) {
   if (!isDBOpen) {
-    console.error("ERROR: Database is not open. Unable to perform insert.");
-    return [undefined, "DB_NOT_OPEN"];
+    await initDB();
   }
 
   const { id: _id, imageUri, address, location, title } = place;
@@ -41,7 +40,17 @@ export async function insertPlace(place: Place) {
     [title, imageUri, address, latitude, longitude]
   );
 
-  return [result as DBLite.SQLiteRunResult, error];
+  return [result, error];
+}
+
+export async function getAllPlaces() {
+  if (!isDBOpen) {
+    console.error("ERROR: Database is not open. Unable to perform insert.");
+    return [undefined, "DB_NOT_OPEN"];
+  }
+
+  const [result, error] = await cRunAsync(placesDB, `SELECT * FROM places`);
+  return [result, error];
 }
 
 export async function closeDB() {
@@ -58,11 +67,13 @@ async function cRunAsync(
     return [undefined, "DB or query not correct."];
   }
 
-  let result: DBLite.SQLiteRunResult | undefined, error: unknown;
+  let result: DBLite.SQLiteRunResult | undefined | unknown[], error: unknown;
 
   await db.withTransactionAsync(async () => {
     try {
-      result = await db.runAsync(query, insertVals);
+      result = query.includes("SELECT")
+        ? await db.getAllAsync(query)
+        : await db.runAsync(query, insertVals);
     } catch (e) {
       error = e;
     }
