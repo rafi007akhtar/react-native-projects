@@ -9,7 +9,10 @@ import IconButton from "./components/UI/IconButton";
 import { COLORS } from "./constants/colors";
 import Map from "./screens/Map";
 import { useEffect } from "react";
-import { closeDB, initDB, isDBOpen } from "./utils/db.utils";
+import { closeDB, getAllPlaces, initDB, isDBOpen } from "./utils/db.utils";
+import { Places } from "./models/place.model";
+import { useAtom } from "jotai";
+import { placesAtom } from "./state/atoms";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,12 +21,27 @@ export default function App() {
     "product-sans": require("./assets/fonts/Product-Sans-Regular.ttf"),
     "product-sans-bold": require("./assets/fonts/Product-Sans-Bold.ttf"),
   });
+  const [_places, setPlaces] = useAtom(placesAtom);
 
   useEffect(() => {
-    initDB().then((db) => {
-      const [result, err] = db;
-      console.log({ result, err });
-    });
+    async function performDBOperations() {
+      const [_init, initErr] = await initDB();
+      if (initErr) {
+        console.error(initErr);
+        return;
+      }
+
+      const [result, placesErr] = await getAllPlaces();
+      if (placesErr) {
+        return;
+      }
+
+      const allPlaces: Places = [...(result as any)];
+      console.log({ allPlaces });
+      setPlaces(allPlaces);
+    }
+
+    performDBOperations();
 
     return () => {
       if (isDBOpen) {
