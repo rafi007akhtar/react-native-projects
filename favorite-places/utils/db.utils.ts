@@ -16,8 +16,8 @@ export async function initDB() {
       title TEXT NOT NULL,
       imgUri TEXT NOT NULL,
       address TEXT NOT NULL,
-      lat REAL NOT NULL,
-      lng REAL NOT NULL
+      latitude REAL NOT NULL,
+      longitude REAL NOT NULL
     )`
   );
 
@@ -35,7 +35,7 @@ export async function insertPlace(place: Place) {
   const [result, error] = await cRunAsync(
     placesDB,
     `INSERT INTO places (
-      title, imgUri, address, lat, lng
+      title, imgUri, address, latitude, longitude
     ) VALUES (?, ?, ?, ?, ?)`,
     [title, imageUri, address, latitude, longitude]
   );
