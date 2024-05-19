@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Alert, Button, Platform, StyleSheet, Text, View } from "react-native";
 import * as Notifications from "expo-notifications";
 import { useEffect } from "react";
 
@@ -10,7 +10,51 @@ Notifications.setNotificationHandler({
   }),
 });
 
+type PushTokenWeb = {
+  endpoint: string;
+  keys: {
+    p256dh: string;
+    auth: string;
+  };
+};
+
+type PushTokenAgnostic = PushTokenWeb | string;
+
+let devicePushToken: PushTokenAgnostic;
+
 export default function App() {
+  useEffect(() => {
+    async function configurePushNotifications() {
+      let { status } = await Notifications.getPermissionsAsync();
+      if (status !== "granted") {
+        const { status: newStatus } =
+          await Notifications.requestPermissionsAsync();
+        status = newStatus;
+      }
+
+      if (status !== "granted") {
+        Alert.alert(
+          "Notification permission needed",
+          "Please provide permission."
+        );
+        return;
+      }
+
+      const pushTokenData = await Notifications.getDevicePushTokenAsync();
+      devicePushToken = pushTokenData.data;
+      console.log({ devicePushToken });
+
+      if (Platform.OS === "android") {
+        await Notifications.setNotificationChannelAsync("default", {
+          name: "test",
+          importance: Notifications.AndroidImportance.LOW,
+        });
+      }
+    }
+
+    configurePushNotifications();
+  }, []);
+
   useEffect(() => {
     const receivedSub = Notifications.addNotificationReceivedListener(
       (notification) => {
