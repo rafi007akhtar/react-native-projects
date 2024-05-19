@@ -11,6 +11,8 @@ Notifications.setNotificationHandler({
   }),
 });
 
+const EXPO_PUSH_URL = "https://exp.host/--/api/v2/push/send";
+
 let devicePushToken: string;
 
 export default function App() {
@@ -41,7 +43,6 @@ export default function App() {
       });
       console.log("push token data:", pushTokenData);
       devicePushToken = pushTokenData.data;
-      console.log({ devicePushToken });
 
       if (Platform.OS === "android") {
         await Notifications.setNotificationChannelAsync("default", {
@@ -90,6 +91,24 @@ export default function App() {
     });
   }
 
+  async function sendPushNotificationHandler() {
+    try {
+      await fetch(EXPO_PUSH_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          to: devicePushToken,
+          title: "Test push notification through code",
+          body: "In the code I am calling the EXPO API for push notifications.",
+        }),
+      });
+    } catch (e) {
+      console.log("Some error occured. Unable to send push notification", e);
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Button
@@ -97,9 +116,16 @@ export default function App() {
         onPress={() => notificationBtnClickHandler(5)}
       />
       <Text></Text>
+
       <Button
         title="Send notification immediately"
         onPress={() => notificationBtnClickHandler()}
+      />
+      <Text></Text>
+
+      <Button
+        title="Send push notification"
+        onPress={sendPushNotificationHandler}
       />
     </View>
   );
