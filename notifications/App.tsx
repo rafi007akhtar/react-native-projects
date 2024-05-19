@@ -1,5 +1,6 @@
-import { Button, StyleSheet, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import * as Notifications from "expo-notifications";
+import { useEffect } from "react";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -10,16 +11,37 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
-  async function notificationBtnClickHandler() {
+  useEffect(() => {
+    const receivedSub = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        console.log(notification);
+      }
+    );
+
+    const responseSub = Notifications.addNotificationResponseReceivedListener(
+      (notification) => {
+        console.log(notification);
+      }
+    );
+
+    return () => {
+      receivedSub.remove();
+      responseSub.remove();
+    };
+  }, []);
+
+  async function notificationBtnClickHandler(delaySeconds = 0) {
     await Notifications.scheduleNotificationAsync({
       content: {
         title: "Test notification",
         body: "This is the body of the test notification",
         data: { im: "Batman" },
       },
-      trigger: {
-        seconds: 5,
-      },
+      trigger: delaySeconds
+        ? {
+            seconds: delaySeconds,
+          }
+        : null,
     });
   }
 
@@ -27,7 +49,12 @@ export default function App() {
     <View style={styles.container}>
       <Button
         title="Schedule a notification"
-        onPress={notificationBtnClickHandler}
+        onPress={() => notificationBtnClickHandler(5)}
+      />
+      <Text></Text>
+      <Button
+        title="Send notification immediately"
+        onPress={() => notificationBtnClickHandler()}
       />
     </View>
   );
