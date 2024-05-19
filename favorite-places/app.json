@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "favorite-places",
+    "name": "Places",
     "slug": "favorite-places",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -12,13 +12,21 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ],
+      "package": "com.rafi007akhtar.favoriteplaces",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -36,6 +44,11 @@
           "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "c102076f-ac66-4db4-a242-f4c196a30ca7"
+      }
+    }
   }
 }
