@@ -1,6 +1,7 @@
 import { Alert, Button, Platform, StyleSheet, Text, View } from "react-native";
 import * as Notifications from "expo-notifications";
 import { useEffect } from "react";
+import Constants from "expo-constants";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -10,20 +11,15 @@ Notifications.setNotificationHandler({
   }),
 });
 
-type PushTokenWeb = {
-  endpoint: string;
-  keys: {
-    p256dh: string;
-    auth: string;
-  };
-};
-
-type PushTokenAgnostic = PushTokenWeb | string;
-
-let devicePushToken: PushTokenAgnostic;
+let devicePushToken: string;
 
 export default function App() {
   useEffect(() => {
+    const projectId =
+      Constants?.expoConfig?.extra?.eas?.projectId ??
+      Constants?.easConfig?.projectId;
+    console.log({ projectId });
+
     async function configurePushNotifications() {
       let { status } = await Notifications.getPermissionsAsync();
       if (status !== "granted") {
@@ -40,7 +36,10 @@ export default function App() {
         return;
       }
 
-      const pushTokenData = await Notifications.getDevicePushTokenAsync();
+      const pushTokenData = await Notifications.getExpoPushTokenAsync({
+        projectId,
+      });
+      console.log("push token data:", pushTokenData);
       devicePushToken = pushTokenData.data;
       console.log({ devicePushToken });
 
@@ -53,6 +52,8 @@ export default function App() {
     }
 
     configurePushNotifications();
+    // Once configured, test sending push notifications from here:
+    // https://expo.dev/notifications
   }, []);
 
   useEffect(() => {
