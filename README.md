@@ -6,9 +6,9 @@ Order of projects to follow along for course content:
 
 1. [goals tracker](./goals-tracker/) | Contains React Native basics.
 2. [guess my number](./guess-my-number/) | Layouting and state sharing in depth.
-3. [meals](./meals/) | Navigation with React Navigation, state management with jotai (alter branch has context and redux), build to apk
+3. [meals](./meals/) | Navigation with React Navigation, state management with Jotai (alter branch has context and redux), build to apk
 4. [other navigators](./other-navigators/) | To practise writing other navigators in React Navigation library. In particular, BottomTabNavigator is used here.
-5. [expense tracker](./expense-tracker/) | Created an app to practise everything learned so far.
+5. [expense tracker](./expense-tracker/) | Created an app to practise everything learned so far. Used Jotai _and_ Zustand to manage state here.
 6. [user authentication](./user-authentication/) | Connect the React Native app with Firebase and manage authentication through that. This is also the only project to use JavaScript instead of TypeScript.
 7. [favorite places](./favorite-places/) | Using native device features using React Native. Worked on geolocation / Google Maps, camera (`expo-image-picker`), SQLite DB for device storage (with new SQLite API, not the deprecated one). Also modified app.json file with plugins for permissions.
 8. [expo bare](./expo-bare/) | Created this project while going through the lesson on React Native without Expo. Created a hello-world bare Expo project. Skipped on the pure React Native project hands on.
@@ -51,3 +51,17 @@ Finally, run this command for Android build:
 ```
 
 The project will be packaged and sent to Expo. You will be able to see the build and APK if successful over there.
+
+## Troubleshooting
+
+The CLI command shown in the course to create an Expo project is outdated. Instead, use this current one (at the time of writing this README).
+
+```sh
+npx create-expo-app AppName --template
+```
+
+The `--template` is optional but I use it everytime to create Typescript apps instead of JavaScript.
+
+The SQLite package this course uses is now [legacy](https://docs.expo.dev/versions/latest/sdk/sqlite-legacy/). I have used the [latest one](https://docs.expo.dev/versions/latest/sdk/sqlite/) (as of writing this README) instead. It's not difficult; just go through the documentation what changes need to be done compared to the code in the lectures.
+
+---
